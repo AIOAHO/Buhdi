@@ -3,7 +3,9 @@ import { View, StyleSheet, Platform } from 'react-native';
 import { Image } from 'expo-image';
 import { TextInput, Button, Text, Headline, HelperText } from 'react-native-paper';
 import * as AuthSession from 'expo-auth-session';
+import * as WebBrowser from 'expo-web-browser';
 import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
+import * as Google from 'expo-auth-session/providers/google';
 import { login } from '../../utils/auth'; 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../../utils/api';
@@ -17,35 +19,49 @@ export default function LoginScreen({ navigation }) {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-    // Configuration for Google sign-in through Expo AuthSession
+
+
+  // Start of google auth viaw
+  WebBrowser.maybeCompleteAuthSession();
+
+  // Configuration for Google sign-in through Expo AuthSession
   const discovery = AuthSession.useAutoDiscovery('https://accounts.google.com');
   // Your Google Client ID from Google Developer Console
   const clientId = '435975996885-evg7n8veuqdqbqbc2bkq1bfo290k7h07.apps.googleusercontent.com';
-
+  const [state, setState] = useState(Math.random().toString(36).substring(2));
 
   // Configuration for Expo AuthSession request
-  const [request, response, promptAsync] = useAuthRequest(
+  const [request, response, promptAsync] = Google.useAuthRequest(
     {
       clientId,
       redirectUri: makeRedirectUri(),
       useProxy: true,
       scopes: ['https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/userinfo.email'],
-      responseType: 'token',
+      responseType: 'id_token',
       usePKCE: false,
+      state, // Add the state parameter to the request
     },
     discovery
   );
 
   console.log(`Redirect URI: ${request?.redirectUri}`);
+  console.log ('token')
 
 
 
 
   useEffect(() => {
     if (response?.type === 'success') {
-      const { access_token } = response.params;
+      const { id_token, state: responseState } = response.params;
+      if (state !== responseState) {
+        console.error('State mismatch');
+        return;
+      }
+      // Log the full response from Google
+    console.log('Full Google response:', response);
+
       // call your backend to verify the token and log the user in
-      handleLoginWithGoogleToken(access_token);
+      handleLoginWithGoogleToken(id_token);
     }
   }, [response]);
 
@@ -53,10 +69,17 @@ export default function LoginScreen({ navigation }) {
     try {
       // Send the token to your backend for verification
       const response = await api.post('/googlelogin', { token });
+      console.log('Backend response:', response); // Add logging here
   
-      if (response.status ===  200 && response.data.jwtToken) {
-        // Store the JWT token received from the backend
-        await AsyncStorage.setItem('jwtToken', response.data.jwtToken);
+      if (response.status === 200 && response.data.jwtToken) {
+        // Check if the app is running in a web environment
+        if (Platform.OS === 'web') {
+          // Store the JWT token received from the backend in localStorage for web
+          localStorage.setItem('jwtToken', response.data.jwtToken);
+        } else {
+          // Use AsyncStorage for React Native environments
+          await AsyncStorage.setItem('jwtToken', response.data.jwtToken);
+        }
         // Navigate to the Homepage screen
         navigation.navigate('Homepage');
       } else {
@@ -64,8 +87,8 @@ export default function LoginScreen({ navigation }) {
         setError('Failed to log in with Google. Please try again.');
       }
     } catch (error) {
-      console.error('Google login error:', error);
-      setError('Failed to log in with Google. Please try again.');
+      console.error('Login error:', error);
+      setError('Login failed. Please try again.');
     }
   };
 

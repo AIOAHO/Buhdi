@@ -12,7 +12,7 @@ export interface User extends Document {
 
 const userSchema = new Schema({
   email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
+  password: { type: String, required: false },
   name: { type: String, default: null },
   assistantId: { type: String, default: null },
   threadId: { type: String, default: null },

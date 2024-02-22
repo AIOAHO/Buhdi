@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken';
 import { OAuth2Client } from 'google-auth-library';
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+console.log(process.env.GOOGLE_CLIENT_ID)
 
 export const register = async (req: Request, res: Response) => {
  try {
@@ -72,15 +73,16 @@ export const login = async (req: Request, res: Response) => {
   
 
   // Helper function to verify the Google ID token
-  const verifyGoogleToken = async (token: string) => {
+  const verifyGoogleToken = async (id_token: string) => {
     const ticket = await client.verifyIdToken({
-      idToken: token,
+      idToken: id_token,
       audience: process.env.GOOGLE_CLIENT_ID, // Ensure this matches your Google Client ID
     });
     return ticket.getPayload(); // Contains the Google user's profile information
   };
   
   export const googleLogin = async (req: Request, res: Response) => {
+    console.log('googleLogin function called'); // test if api is reached
     try {
       const { token } = req.body;
       const payload = await verifyGoogleToken(token); // Verify the Google ID token
@@ -112,11 +114,18 @@ export const login = async (req: Request, res: Response) => {
       const jwtToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
         expiresIn: '1h', // Adjust token expiration as needed
       });
+      console.log('Generated JWT token:', jwtToken); // Log the generated JWT token for debugging
+
   
       res.status(200).json({ jwtToken, userId: user._id });
     } catch (error) {
-      console.error('Google login error:', error);
-      res.status(500).json({ message: 'Google login failed' });
+      console.error('Google login error:', {
+        message: (error as Error).message,
+        stack: (error as Error).stack, // More detailed error insights
+        token: req.body.token, // Caution with logging sensitive info; ensure compliance with privacy standards
+      });
+      res.status(500).json({ message: 'Google login failed due to server error' });
     }
-  };
+};
+
   
