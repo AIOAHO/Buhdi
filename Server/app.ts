@@ -5,6 +5,7 @@ import authRoutes from './routes/authRoutes'; // Adjust the path as necessary
 import { authenticateToken } from './middleware/authMiddleware';
 
 
+
 console.log(process.env)
 
 const app = express();

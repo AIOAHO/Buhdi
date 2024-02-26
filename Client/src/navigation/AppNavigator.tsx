@@ -7,13 +7,15 @@ import HomepageScreen from '../components/Screens/HomepageScreen';
 import EnneagramQuiz from '../components/Screens/EnneagramQuizScreen';
 import EnneagramResults from '../components/Screens/EnneagramResultsScreen';
 import ChatScreen from '../components/Screens/ChatScreen'; //
+import WaitingListScreen from '../components/Screens/WaitingListScreen';
 
 const Stack = createStackNavigator();
 
 export default function AppNavigator() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
+      <Stack.Navigator initialRouteName="Waitinglist">
+        <Stack.Screen name="WaitingList" component={WaitingListScreen}/>
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Registration" component={RegistrationScreen} />
         <Stack.Screen name="Homepage" component={HomepageScreen} />
@@ -24,3 +26,4 @@ export default function AppNavigator() {
     </NavigationContainer>
   );
 }
+

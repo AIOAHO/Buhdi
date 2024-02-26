@@ -1,0 +1,39 @@
+import { Request, Response } from 'express';
+import SibApiV3Sdk from 'sib-api-v3-sdk';
+
+// Configure API key authorization
+const defaultClient = SibApiV3Sdk.ApiClient.instance;
+const apiKey = defaultClient.authentications['api-key'];
+apiKey.apiKey = process.env.BREVO_API; // Make sure BREVO_API is set in your .env file
+
+const apiInstance = new SibApiV3Sdk.ContactsApi();
+
+// waitinglistController.ts
+export const addToWaitingList = async (req: Request, res: Response) => {
+  console.log('addToWaitingList called'); // Log when the function is called
+  try {
+    const { email } = req.body;
+    console.log('Email received:', email); // Log the received email
+
+    // Create a contact object
+    const createContact = new SibApiV3Sdk.CreateContact();
+    createContact.email = email;
+    // Add any other attributes as needed
+    createContact.listIds = [2]; // Adjust the list ID as needed
+    createContact.emailBlacklisted = false;
+    createContact.smsBlacklisted = false;
+    createContact.updateEnabled = false;
+
+    // Add the contact to SendinBlue
+    apiInstance.createContact(createContact).then(function(data: any) {
+      console.log('API called successfully. Returned data:', data);
+      res.status(200).json({ message: 'Email added to Brevo successfully' });
+    }, function(error: any) {
+      console.error('Error adding email to Brevo:', error);
+      res.status(500).json({ message: 'An error occurred while adding the email to Brevo' });
+    });
+  } catch (error) {
+    console.error('Error processing request:', error);
+    res.status(500).json({ message: 'An error occurred while processing your request' });
+  }
+};
