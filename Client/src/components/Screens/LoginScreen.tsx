@@ -16,8 +16,6 @@ export default function LoginScreen({ navigation }) {
   const [password, setPassword] = useState<string>('');
   const [error, setError] = useState<string>('');
 
-
-
   // Start of google auth viaw
   WebBrowser.maybeCompleteAuthSession();
 
@@ -42,10 +40,7 @@ export default function LoginScreen({ navigation }) {
   );
 
   console.log(`Redirect URI: ${request?.redirectUri}`);
-  console.log ('token')
-
-
-
+  console.log ('token');
 
   useEffect(() => {
     if (response?.type === 'success') {
@@ -141,9 +136,9 @@ export default function LoginScreen({ navigation }) {
           mode="outlined"
           style={styles.input}
         />
-        {error ? <HelperText type="error">{error}</HelperText> : null}
+        {<HelperText style={{ color: '#E85F5C', height: 25}}type="error">{error}</HelperText>}
         
-        <Button mode="contained" onPress={handleLogin} style={styles.button}>
+        <Button onPress={handleLogin} style={styles.button}>
           Login
         
         </Button>
@@ -190,7 +185,7 @@ const styles = StyleSheet.create({
     color: '#E4FDE1',
     flex: 1,
     height: 40,
-    justifyContent:"center",
+    justifyContent: "center",
     backgroundColor: 'rgba(191, 191, 191, 0.25)',
     marginBottom: 10,
   },
