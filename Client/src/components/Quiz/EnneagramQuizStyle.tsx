@@ -4,12 +4,21 @@ const EnneagramQuizStyle = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        padding: 20,
         alignItems: 'center',
         width: '100%',
-        maxWidth: 400, // Set a maximum width for the container
-        alignSelf: 'center',
-        },
+      },
+    linearTop: {
+    width: '120%',
+    borderTopWidth: 7,
+    borderRadius: 50,
+    borderColor: '#DBCBD8',
+    position: 'absolute',
+    top: 0,
+    },
+    formContainer: {
+    width: '100%',
+    maxWidth: 400, // Set a maximum width for the container
+    },
     question: {
         marginBottom: 20, // Add a bottom margin to the Question component
     },

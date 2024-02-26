@@ -11,13 +11,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../../utils/api';
 import googleLogo from '../../../assets/googleLogo.png'; // Adjust the path as needed
 
-
-
-
 export default function LoginScreen({ navigation }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [error, setError] = useState<string>('');
 
 
 
@@ -81,7 +78,7 @@ export default function LoginScreen({ navigation }) {
           await AsyncStorage.setItem('jwtToken', response.data.jwtToken);
         }
         // Navigate to the Homepage screen
-        navigation.navigate('Homepage');
+        navigation.navigate('Home');
       } else {
         // Handle unsuccessful login
         setError('Failed to log in with Google. Please try again.');
@@ -96,7 +93,7 @@ export default function LoginScreen({ navigation }) {
     try {
       const success = await login(email, password); // Assuming this function returns a boolean
       if (success) {
-        navigation.navigate('Homepage');
+        navigation.navigate('Home');
       } else {
         setError('Invalid email or password');
       }
@@ -124,41 +121,43 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Headline style={styles.headline}>Login</Headline>
-      <TextInput
-        label="Email"
-        value={email}
-        onChangeText={setEmail}
-        mode="outlined"
-        autoCapitalize="none"
-        keyboardType="email-address"
-        style={styles.input}
-      />
-      <TextInput
-        label="Password"
-        secureTextEntry
-        value={password}
-        onChangeText={setPassword}
-        mode="outlined"
-        style={styles.input}
-      />
-      {error ? <HelperText type="error">{error}</HelperText> : null}
-      
-      <Button mode="contained" onPress={handleLogin} style={styles.button}>
-        Login
-      
-      </Button>
+      <View style={styles.linearTop}/>
+      <View style={styles.formContainer}>
+        <Headline style={styles.headline}>Login</Headline>
+        <TextInput
+          label="Email"
+          value={email}
+          onChangeText={setEmail}
+          mode="outlined"
+          autoCapitalize="none"
+          keyboardType="email-address"
+          style={styles.input}
+        />
+        <TextInput
+          label="Password"
+          secureTextEntry
+          value={password}
+          onChangeText={setPassword}
+          mode="outlined"
+          style={styles.input}
+        />
+        {error ? <HelperText type="error">{error}</HelperText> : null}
+        
+        <Button mode="contained" onPress={handleLogin} style={styles.button}>
+          Login
+        
+        </Button>
 
-      <GoogleSignInButton onPress={() => promptAsync()} disabled={!request} />
+        <GoogleSignInButton onPress={() => promptAsync()} disabled={!request} />
 
 
-      <Text style={styles.registerText}>
-        Don't have an account?{' '}
-        <Text style={styles.registerLink} onPress={() => navigation.navigate('Registration')}>
-          Register here
+        <Text style={styles.registerText}>
+          Don't have an account?{' '}
+          <Text style={styles.registerLink} onPress={() => navigation.navigate('Registration')}>
+            Register here
+          </Text>
         </Text>
-      </Text>
-
+      </View>
     </View>
   );
 }
@@ -167,24 +166,40 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    padding: 20,
     alignItems: 'center',
     width: '100%',
+  },
+  linearTop: {
+    width: '120%',
+    borderTopWidth: 7,
+    borderRadius: 50,
+    borderColor: '#DBCBD8',
+    position: 'absolute',
+    top: 0,
+  },
+  formContainer: {
+    width: '100%',
     maxWidth: 400, // Set a maximum width for the container
-    alignSelf: 'center',
   },
   headline: {
     textAlign: 'center',
     marginBottom: 20,
+    color: '#E4FDE1',
   },
   input: {
+    color: '#E4FDE1',
+    flex: 1,
+    height: 40,
+    justifyContent:"center",
+    backgroundColor: 'rgba(191, 191, 191, 0.25)',
     marginBottom: 10,
-    width: '100%', // Ensure inputs take the full width of the container
   },
   button: {
     marginTop: 10,
     width: '100%', // Ensure buttons take the full width of the container
     maxWidth: 400, // Limit the maximum width of buttons
+    backgroundColor: '#E4FDE1',
+    color: '#59656F',
   },
   googleButton: {
     width: '100%', // Full width button
@@ -199,17 +214,17 @@ const styles = StyleSheet.create({
     height: 24,
   },
   googleText: {
+    color: '#E4FDE1',
 //placeholder
   },
   registerText: {
     marginTop: 10,
     textAlign: 'center',
     },
-
   registerLink: {
     marginTop: 10,
     textAlign: 'center',
-    color: '#6200ee',
+    color: '#E4FDE1',
     fontWeight: 'bold',
   },
 });
