@@ -136,11 +136,10 @@ export default function LoginScreen({ navigation }) {
           mode="outlined"
           style={styles.input}
         />
-        {<HelperText style={{ color: '#E85F5C', height: 25}}type="error">{error}</HelperText>}
+        <HelperText style={{ color: '#E85F5C', height: 25}}type="error">{error}</HelperText>
         
         <Button onPress={handleLogin} style={styles.button}>
           Login
-        
         </Button>
 
         <GoogleSignInButton onPress={() => promptAsync()} disabled={!request} />
