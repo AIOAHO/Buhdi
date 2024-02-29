@@ -4,11 +4,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { EnneagramResultPayload } from '../types'; // Define this type according to your payload structure
 
 
+
 // Check if running in a web environment
 const isWeb = Platform.OS === 'web';
 
 // Define the base URL for your backend API
-const baseURL = 'http://localhost:3000/api';
+const baseURL = process.env.EXPO_PUBLIC_API_BASE_URL; 
+
 
 // Create an Axios instance with the base URL
 const api = axios.create({
