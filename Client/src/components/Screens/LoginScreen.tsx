@@ -34,7 +34,7 @@ export default function LoginScreen({ navigation }) {
   const [request, response, promptAsync] = Google.useAuthRequest(
     {
       clientId,
-      redirectUri: makeRedirectUri(),
+      redirectUri: "http://localhost:19006/login",
       useProxy: true,
       scopes: ['https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/userinfo.email'],
       responseType: 'id_token',
@@ -73,13 +73,16 @@ export default function LoginScreen({ navigation }) {
   
       if (response.status === 200 && response.data.jwtToken) {
         // Check if the app is running in a web environment
+        console.log('JWT Token:', response.data.jwtToken);
         if (Platform.OS === 'web') {
+          console.log('Storing JWT token in localStorage');
           // Store the JWT token received from the backend in localStorage for web
           localStorage.setItem('jwtToken', response.data.jwtToken);
         } else {
           // Use AsyncStorage for React Native environments
           await AsyncStorage.setItem('jwtToken', response.data.jwtToken);
         }
+        
         // Navigate to the Homepage screen
         navigation.navigate('Homepage');
       } else {
