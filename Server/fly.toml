@@ -1,9 +1,9 @@
-# fly.toml app configuration file generated for buhdi on 2024-02-29T12:26:59+01:00
+# fly.toml app configuration file generated for buhdib on 2024-02-29T13:17:30+01:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'buhdi'
+app = 'buhdib'
 primary_region = 'ams'
 
 [build]

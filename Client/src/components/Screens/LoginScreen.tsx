@@ -18,6 +18,7 @@ export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const redirectUri = process.env.EXPO_PUBLIC_GAUTH_REDIRECT_URI
 
 
 
@@ -26,7 +27,7 @@ export default function LoginScreen({ navigation }) {
 
   // Configuration for Google sign-in through Expo AuthSession
   const discovery = AuthSession.useAutoDiscovery('https://accounts.google.com');
-  // Your Google Client ID from Google Developer Console
+  // Your Google Client ID from Google Develper Console
   const clientId = process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID;
   const [state, setState] = useState(Math.random().toString(36).substring(2));
 
@@ -34,8 +35,8 @@ export default function LoginScreen({ navigation }) {
   const [request, response, promptAsync] = Google.useAuthRequest(
     {
       clientId,
-      redirectUri: makeRedirectUri(),
-      useProxy: true,
+      redirectUri: redirectUri,
+      useProxy: false,
       scopes: ['https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/userinfo.email'],
       responseType: 'id_token',
       usePKCE: false,

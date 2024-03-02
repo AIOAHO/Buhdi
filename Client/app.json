@@ -37,13 +37,17 @@
     },
     "web": {
       "favicon": "./assets/favicon.png",
-      "bundlder": "metro"
+
+      
     },
     "extra": {
       "eas": {
         "projectId": "eed7344c-501a-49a7-9e18-543df8a598d3"
       }
     },
-    "owner": "aioaho"
+    "owner": "aioaho",
+    "plugins": [
+      "expo-router"
+    ]
   }
 }

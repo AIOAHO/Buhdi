@@ -27,6 +27,7 @@
     "sib-api-v3-sdk": "^8.5.0"
   },
   "devDependencies": {
+    "@flydotio/dockerfile": "^0.5.2",
     "@types/bcrypt": "^5.0.2",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",

@@ -14,7 +14,7 @@ RUN npm install -g serve
 
 # Copy the build directory contents into the container at /app
 # Make sure to build your Expo web app locally first and remove web-build from .gitignore temporarily if you're copying it directly
-COPY ./web-build .
+COPY ./dist .
 
 # Tell the world we expose port 5000 (or whichever port you prefer)
 EXPOSE 3000
