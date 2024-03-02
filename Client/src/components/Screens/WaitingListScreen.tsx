@@ -8,33 +8,23 @@ import { Platform } from 'react-native';
 
 export default function WaitingListScreen ({ navigation }) {
   useEffect(() => {
-    const checkAuthState = async (token) => {
-      
-      
-      // Check the platform and use the appropriate storage method
-      if (Platform.OS === 'web') {
-        // For web, use localStorage
-        token = localStorage.getItem('jwtToken');
-      } else {
-        // For React Native (iOS, Android), use AsyncStorage
-        try {
-          token = await AsyncStorage.getItem('jwtToken');
-        } catch (error) {
-          console.error('Failed to retrieve JWT token:', error);
+    const checkAuthState = async () => {
+      let token;
+      try {
+        token = await AsyncStorage.getItem('jwtToken');
+        
+        if (token) {
+          navigation.navigate('Homepage');
         }
+        // No else clause needed, if no token is found, stay on the WaitingListScreen
+      } catch (error) {
+        console.error('Failed to retrieve JWT token in WaitingListScreen:', error);
+        // Handle error (if necessary, show an error message)
       }
-
-      console.log('Token retrieved:', token); // Debugging: Log the retrieved token
-
-      if (token) {
-        // If token is found, navigate to the Homepage
-        navigation.navigate('Homepage');
-      }
-      // If no token is found, do nothing and stay on the WaitingListScreen
     };
 
     checkAuthState();
-  }, [navigation]); 
+  }, []);
 
   const { colors } = useTheme();
   const [email, setEmail] = useState('');
@@ -44,7 +34,7 @@ export default function WaitingListScreen ({ navigation }) {
   const handleEmailChange = (email) => setEmail(email);
 
   const handleJoinWaitingList = async () => {
-    console.log('Attempting to join waiting list with email:', email); // Log the email being sent
+    
     // Check if the email is empty
     if (!email.trim()) {
       setSuccessMessage(''); // Clear any previous success messages
@@ -54,7 +44,7 @@ export default function WaitingListScreen ({ navigation }) {
   
     try {
       const response = await api.post('/waiting-list', { email });
-      console.log('Response from waiting list:', response.data.message); // Log the success message from the backend
+      
       setErrorMessage(''); // Clear any previous error messages
       setSuccessMessage(response.data.message); // Set the success message from the backend response
     } catch (error) {

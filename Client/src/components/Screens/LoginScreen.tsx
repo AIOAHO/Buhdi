@@ -45,8 +45,8 @@ export default function LoginScreen({ navigation }) {
     discovery
   );
 
-  console.log(`Redirect URI: ${request?.redirectUri}`);
-  console.log(process.env.EXPO_PUBLIC_API_BASE_URL)
+
+  
 
 
 
@@ -59,7 +59,7 @@ export default function LoginScreen({ navigation }) {
         return;
       }
       // Log the full response from Google
-    console.log('Full Google response:', response);
+    
 
       // call your backend to verify the token and log the user in
       handleLoginWithGoogleToken(id_token);
@@ -70,13 +70,13 @@ export default function LoginScreen({ navigation }) {
     try {
       // Send the token to your backend for verification
       const response = await api.post('/googlelogin', { token });
-      console.log('Backend response:', response); // Add logging here
+      
   
       if (response.status === 200 && response.data.jwtToken) {
         // Check if the app is running in a web environment
-        console.log('JWT Token:', response.data.jwtToken);
+        
         if (Platform.OS === 'web') {
-          console.log('Storing JWT token in localStorage');
+          
           // Store the JWT token received from the backend in localStorage for web
           localStorage.setItem('jwtToken', response.data.jwtToken);
         } else {

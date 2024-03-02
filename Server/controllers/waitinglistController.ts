@@ -9,10 +9,10 @@ apiKey.apiKey = process.env.BREVO_API; // Make sure BREVO_API is set in your .en
 const apiInstance = new SibApiV3Sdk.ContactsApi();
 
 export const addToWaitingList = async (req: Request, res: Response) => {
-  console.log('addToWaitingList called'); // Log when the function is called
+  
   try {
     const { email } = req.body;
-    console.log('Email received:', email); // Log the received email
+    
 
     // Create a contact object
     const createContact = new SibApiV3Sdk.CreateContact();
@@ -25,7 +25,7 @@ export const addToWaitingList = async (req: Request, res: Response) => {
 
     // Attempt to add the contact to SendinBlue
     apiInstance.createContact(createContact).then(function(data: any) {
-      console.log('API called successfully. Returned data:', data);
+      
       res.status(200).json({ message: 'Email added to Brevo successfully', data: data });
     }).catch(function(error: any) {
       console.error('Error adding email to Brevo:', error);

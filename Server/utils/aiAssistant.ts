@@ -4,7 +4,7 @@ import User from "../models/user";
 import assistantPrompt from "../prompts/assistantPrompt";
 
 
-console.log(`Using API key: ${process.env.OPENAI_KEY}`);
+
 const openai = new OpenAI({ apiKey: process.env.OPENAI_KEY });
 
 

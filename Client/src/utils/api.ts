@@ -28,11 +28,11 @@ api.interceptors.request.use(
        token = await AsyncStorage.getItem('jwtToken');
      }
  
-     console.log('Retrieved token:', token);
+     
  
      if (token) {
        config.headers.Authorization = `Bearer ${token}`;
-       console.log('Set Authorization header:', config.headers.Authorization);
+       
      }
  
      return config;
@@ -42,7 +42,7 @@ api.interceptors.request.use(
 
 // Interceptors for logging
 api.interceptors.request.use((request: AxiosRequestConfig) => {
-  console.log('Starting Request', JSON.stringify(request, null, 2));
+  
   return request;
 }, (error: AxiosError) => {
   console.error('Request Error:', error);
@@ -50,7 +50,7 @@ api.interceptors.request.use((request: AxiosRequestConfig) => {
 });
 
 api.interceptors.response.use((response: AxiosResponse) => {
-  console.log('Response:', JSON.stringify(response, null, 2));
+  
   return response;
 }, (error: AxiosError) => {
   console.error('Response Error:', error);

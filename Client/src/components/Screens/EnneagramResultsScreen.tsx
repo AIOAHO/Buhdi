@@ -33,7 +33,7 @@ const EnneagramResults = ({ route, navigation }) => {
         const fullTypeName = enneagramTypeMapping[highestScoreType];
         // Step 1: Save the quiz results
         await api.post('/save-enneagram-results', { enneagramType: fullTypeName, userId, typeScores });
-        console.log('Results saved successfully');
+        
 
         // Step 2: Fetch the enneagram analysis
         const analysisResponse = await api.post('/get-enneagram-analysis', { enneagramType: fullTypeName });

@@ -5,34 +5,34 @@ import OpenAI from 'openai';
 import User from '../models/user';
 
 // Assuming OPENAI_KEY is set correctly in your environment
-console.log('API Key:', process.env.OPENAI_KEY);
+
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_KEY
 });
 
 export const saveEnneagramResults = async (req: Request, res: Response) => {
-  console.log("Entering saveEnneagramResults function");
+  
   const { enneagramType, userId, typeScores } = req.body;
 
-  console.log("Received data:", { enneagramType, userId, typeScores });
+  
 
   if (!userId || !typeScores) {
-    console.log("Missing userId or typeScores");
+    
     return res.status(400).send('Missing userId or typeScores');
   }
 
   try {
-    console.log(`Attempting to update user with ID: ${userId}`);
+    
     const user = await User.findByIdAndUpdate(userId, {
       $set: { enneagramResults: typeScores }
     }, { new: true });
 
     if (!user) {
-      console.log(`User not found with ID: ${userId}`);
+      
       return res.status(404).send('User not found');
     }
 
-    console.log('User updated successfully:', user);
+    
     res.status(200).json({ message: 'Enneagram results saved successfully', user });
   } catch (error) {
     console.error('Error saving Enneagram results:', error);

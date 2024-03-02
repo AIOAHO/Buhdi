@@ -6,13 +6,13 @@ import jwt from 'jsonwebtoken';
 import { OAuth2Client } from 'google-auth-library';
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
-console.log(process.env.GOOGLE_CLIENT_ID)
+
 
 export const register = async (req: Request, res: Response) => {
  try {
     const { email, password } = req.body;
     // Logging request details
-    console.log(`Register Request: Username: ${password}, Email: ${email}`);
+    
     // Check if the user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -82,7 +82,7 @@ export const login = async (req: Request, res: Response) => {
   };
   
   export const googleLogin = async (req: Request, res: Response) => {
-    console.log('googleLogin function called'); // test if api is reached
+    
     try {
       const { token } = req.body;
       const payload = await verifyGoogleToken(token); // Verify the Google ID token
@@ -114,7 +114,7 @@ export const login = async (req: Request, res: Response) => {
       const jwtToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
         expiresIn: '1h', // Adjust token expiration as needed
       });
-      console.log('Generated JWT token:', jwtToken); // Log the generated JWT token for debugging
+      
 
   
       res.status(200).json({ jwtToken, userId: user._id });
