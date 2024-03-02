@@ -2,29 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { TextInput, Button, Text, Title, useTheme, HelperText } from 'react-native-paper';
 import api from '../../utils/api';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Platform } from 'react-native';
+
 
 
 export default function WaitingListScreen ({ navigation }) {
-  useEffect(() => {
-    const checkAuthState = async () => {
-      let token;
-      try {
-        token = await AsyncStorage.getItem('jwtToken');
-        
-        if (token) {
-          navigation.navigate('Homepage');
-        }
-        // No else clause needed, if no token is found, stay on the WaitingListScreen
-      } catch (error) {
-        console.error('Failed to retrieve JWT token in WaitingListScreen:', error);
-        // Handle error (if necessary, show an error message)
-      }
-    };
-
-    checkAuthState();
-  }, []);
 
   const { colors } = useTheme();
   const [email, setEmail] = useState('');

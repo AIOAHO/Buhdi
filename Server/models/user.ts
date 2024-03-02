@@ -8,6 +8,7 @@ export interface User extends Document {
   assistantId: string;
   threadId: string;
   enneagramResults: Array<{ type: string; score: number }>;
+  status: string; // Add this line
 }
 
 const userSchema = new Schema({
@@ -20,6 +21,7 @@ const userSchema = new Schema({
     type: { type: String },
     score: { type: Number }
   }],
+  status: { type: String, default: 'waiting_list' }, // Define the status field here
 });
 
 const User = mongoose.model<User>('User', userSchema);

@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import SibApiV3Sdk from 'sib-api-v3-sdk';
+import WaitingList from '../models/waitingList'; // Adjust the import path as necessary
 
 // Configure API key authorization
 const defaultClient = SibApiV3Sdk.ApiClient.instance;
@@ -9,12 +10,12 @@ apiKey.apiKey = process.env.BREVO_API; // Make sure BREVO_API is set in your .en
 const apiInstance = new SibApiV3Sdk.ContactsApi();
 
 export const addToWaitingList = async (req: Request, res: Response) => {
-  
-  try {
-    const { email } = req.body;
-    
+  console.log('addToWaitingList called'); // Log when the function is called
+  const { email } = req.body;
+  console.log('Email received:', email); // Log the received email
 
-    // Create a contact object
+  try {
+    // Create a contact object for Brevo
     const createContact = new SibApiV3Sdk.CreateContact();
     createContact.email = email;
     // Add any other attributes as needed
@@ -23,25 +24,33 @@ export const addToWaitingList = async (req: Request, res: Response) => {
     createContact.smsBlacklisted = false;
     createContact.updateEnabled = false;
 
-    // Attempt to add the contact to SendinBlue
-    apiInstance.createContact(createContact).then(function(data: any) {
-      
-      res.status(200).json({ message: 'Email added to Brevo successfully', data: data });
-    }).catch(function(error: any) {
-      console.error('Error adding email to Brevo:', error);
-      let errorMessage = 'An error occurred while adding the email to Brevo';
-      if (error.response && error.response.text) {
-        try {
-          const errorResponse = JSON.parse(error.response.text);
-          errorMessage = errorResponse.message || errorMessage;
-        } catch (parseError) {
-          console.error('Error parsing error response:', parseError);
-        }
-      }
-      res.status(500).json({ message: errorMessage });
-    });
-  } catch (error) {
+    // Await the API call to add the contact to Brevo
+    await apiInstance.createContact(createContact);
+    console.log('API called successfully.');
+
+    // Check if a waiting list entry with this email already exists to avoid duplicates
+    const existingEntry = await WaitingList.findOne({ email: email });
+    if (!existingEntry) {
+      // If no existing waiting list entry is found, add the new entry
+      const newEntry = new WaitingList({ email });
+      await newEntry.save();
+      console.log('New waiting list entry added to MongoDB successfully');
+      res.status(200).json({ message: 'Added to waiting list successfully. Please check your email for further instructions.' });
+    } else {
+      console.log('Email already on waiting list.');
+      res.status(409).json({ message: 'Email already on the waiting list.' });
+    }
+  } catch (error: any) {
     console.error('Error processing request:', error);
-    res.status(500).json({ message: 'An error occurred while processing your request' });
+    let errorMessage = 'An error occurred while processing your request';
+    if (error.response && error.response.text) {
+      try {
+        const errorResponse = JSON.parse(error.response.text);
+        errorMessage = errorResponse.message || errorMessage;
+      } catch (parseError) {
+        console.error('Error parsing error response:', parseError);
+      }
+    }
+    res.status(500).json({ message: errorMessage });
   }
 };

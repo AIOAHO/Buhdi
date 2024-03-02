@@ -4,37 +4,55 @@ import User from '../models/user';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { OAuth2Client } from 'google-auth-library';
+import WaitingList from '../models/waitingList';
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
-
 export const register = async (req: Request, res: Response) => {
- try {
+  try {
     const { email, password } = req.body;
-    // Logging request details
     
-    // Check if the user already exists
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.status(400).json({ message: 'User already exists' });
+    // First, check the waiting list for an approved entry
+    const waitingEntry = await WaitingList.findOne({ email, status: 'approved' });
+
+    if (!waitingEntry) {
+      // If there's no approved entry in the waiting list, prevent registration
+      return res.status(400).json({ message: 'Woops, Buhdi will be there for you soon!' });
     }
 
+    // If approved in the waiting list, check if the user already exists in the User collection
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      // If a user already exists, they shouldn't be registering again
+      return res.status(400).json({ message: 'User already exists.' });
+    }
+
+    // User is approved and does not exist, so proceed with registration
     // Hash the password
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    // Create a new user
-    const newUser = new User({ email, password: hashedPassword });
+    // Create a new user with the hashed password
+    const newUser = new User({
+      email,
+      password: hashedPassword,
+      // Include any other fields you need to initialize
+    });
+
+    // Save the new user to the database
     await newUser.save();
 
-    // Create a new assistant for the user: at the moment there is no seperate ai assistant
-    // await createOpenAIAssistant(newUser._id);
+    // Optionally, update or remove the entry from the WaitingList to reflect that they've been registered
+    // For example, to remove the entry:
+    await WaitingList.findOneAndDelete({ email });
 
-    res.status(201).json({ message: 'Registration successful' });
- } catch (error) {
+    // Respond with successful registration
+    res.status(201).json({ message: 'Registration successful.' });
+
+  } catch (error) {
     console.error('Registration error:', error);
-    res.status(500).json({ message: 'Registration failed' });
- }
+    res.status(500).json({ message: 'Registration failed due to an unexpected error.' });
+  }
 };
 
 
