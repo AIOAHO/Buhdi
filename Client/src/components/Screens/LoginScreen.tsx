@@ -18,22 +18,23 @@ export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [error, setError] = useState<string>('');
+  const redirectUri = process.env.EXPO_PUBLIC_GAUTH_REDIRECT_URI;
 
   // Start of google auth viaw
   WebBrowser.maybeCompleteAuthSession();
 
   // Configuration for Google sign-in through Expo AuthSession
   const discovery = AuthSession.useAutoDiscovery('https://accounts.google.com');
-  // Your Google Client ID from Google Developer Console
-  const clientId = '435975996885-evg7n8veuqdqbqbc2bkq1bfo290k7h07.apps.googleusercontent.com';
+  // Your Google Client ID from Google Develper Console
+  const clientId = process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID;
   const [state, setState] = useState(Math.random().toString(36).substring(2));
 
   // Configuration for Expo AuthSession request
   const [request, response, promptAsync] = Google.useAuthRequest(
     {
       clientId,
-      redirectUri: makeRedirectUri(),
-      useProxy: true,
+      redirectUri: redirectUri,
+      useProxy: false,
       scopes: ['https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/userinfo.email'],
       responseType: 'id_token',
       usePKCE: false,
@@ -53,7 +54,7 @@ export default function LoginScreen({ navigation }) {
         return;
       }
       // Log the full response from Google
-    console.log('Full Google response:', response);
+    
 
       // call your backend to verify the token and log the user in
       handleLoginWithGoogleToken(id_token);
@@ -64,17 +65,20 @@ export default function LoginScreen({ navigation }) {
     try {
       // Send the token to your backend for verification
       const response = await api.post('/googlelogin', { token });
-      console.log('Backend response:', response); // Add logging here
+      
   
       if (response.status === 200 && response.data.jwtToken) {
         // Check if the app is running in a web environment
+        
         if (Platform.OS === 'web') {
+          
           // Store the JWT token received from the backend in localStorage for web
           localStorage.setItem('jwtToken', response.data.jwtToken);
         } else {
           // Use AsyncStorage for React Native environments
           await AsyncStorage.setItem('jwtToken', response.data.jwtToken);
         }
+        
         // Navigate to the Homepage screen
         navigation.navigate('Home');
       } else {

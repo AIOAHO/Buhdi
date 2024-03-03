@@ -4,9 +4,11 @@ import { saveEnneagramResults, getEnneagramAnalysis } from '../controllers/ennea
 import { sendMessage } from '../controllers/chatController';
 import { authenticateToken } from '../middleware/authMiddleware';
 import { googleLogin } from '../controllers/authController';
+import { addToWaitingList } from '../controllers/waitinglistController';
 
 const router = express.Router();
 
+router.post('/waiting-list', addToWaitingList);
 router.post('/register', register);
 router.post('/login', login);
 router.post('/googlelogin', googleLogin);

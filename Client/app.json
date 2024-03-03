@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "scheme": "com.aibuhdi.test",
+    "scheme": "com.aibuhdi.app",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -36,13 +36,18 @@
       "package": "com.buhdi.app"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+
+      
     },
     "extra": {
       "eas": {
         "projectId": "eed7344c-501a-49a7-9e18-543df8a598d3"
       }
     },
-    "owner": "aioaho"
+    "owner": "aioaho",
+    "plugins": [
+      "expo-router"
+    ]
   }
 }
