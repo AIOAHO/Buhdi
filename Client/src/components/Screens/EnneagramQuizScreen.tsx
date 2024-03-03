@@ -97,37 +97,41 @@ export default function EnneagramQuiz() {
 
   return (
     <View style={styles.container}>
-      {shuffledQuestions.length > 0 && (
-        <>
-          <Question
-            question={shuffledQuestions[currentQuestionIndex]}
-            onAnswer={handleAnswer}
-            selectedScore={answers[currentQuestionIndex]}
-            style={styles.question}
-          />
-          <Text style={styles.questionIndicator}>
-            {currentQuestionIndex + 1}/{shuffledQuestions.length}
-          </Text>
-          <View style={styles.navigationContainer}>
-            {/* Wrap the Previous button in a View for left alignment */}
-            <View style={{ flex: 1, alignItems: 'flex-start' }}>
-              {currentQuestionIndex > 0 && (
-                <Button mode="contained" onPress={goToPreviousQuestion}>Previous</Button>
-              )}
+      <View style={styles.linearTop}/>
+
+      <View style={styles.formContainer}>
+        {shuffledQuestions.length > 0 && (
+          <>
+            <Question
+              question={shuffledQuestions[currentQuestionIndex]}
+              onAnswer={handleAnswer}
+              selectedScore={answers[currentQuestionIndex]}
+              style={styles.question}
+            />
+            <Text style={styles.questionIndicator}>
+              {currentQuestionIndex + 1}/{shuffledQuestions.length}
+            </Text>
+            <View style={styles.navigationContainer}>
+              {/* Wrap the Previous button in a View for left alignment */}
+              <View style={{ flex: 1, alignItems: 'flex-start' }}>
+                {currentQuestionIndex > 0 && (
+                  <Button mode="contained" onPress={goToPreviousQuestion}>Previous</Button>
+                )}
+              </View>
+              
+              {/* Wrap the Next and Submit buttons in a View for right alignment */}
+              <View style={{ flex: 1, alignItems: 'flex-end', flexDirection: 'row', justifyContent: 'flex-end' }}>
+                {currentQuestionIndex < shuffledQuestions.length - 1 && (
+                  <Button mode="contained" onPress={goToNextQuestion}>Next</Button>
+                )}
+                {currentQuestionIndex === shuffledQuestions.length - 1 && (
+                  <Button mode="contained" onPress={handleSubmit}>Submit</Button>
+                )}
+              </View>
             </View>
-            
-            {/* Wrap the Next and Submit buttons in a View for right alignment */}
-            <View style={{ flex: 1, alignItems: 'flex-end', flexDirection: 'row', justifyContent: 'flex-end' }}>
-              {currentQuestionIndex < shuffledQuestions.length - 1 && (
-                <Button mode="contained" onPress={goToNextQuestion}>Next</Button>
-              )}
-              {currentQuestionIndex === shuffledQuestions.length - 1 && (
-                <Button mode="contained" onPress={handleSubmit}>Submit</Button>
-              )}
-            </View>
-          </View>
-        </>
-      )}
+          </>
+        )}
+      </View>
     </View>
   );
 };

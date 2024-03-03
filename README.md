@@ -11,11 +11,15 @@ More info coming soon.
 ### Installation and setup
 
 * Clone this repo
-* Install the packages:
+* Install the packages: (both within Client and Server branch)
 ```
 npm i
 ```
-* Run & use Expo (or Expo via Xcode or Web)
+* In server branch compile to JS
+```
+tsc
+```
+* Run & use Expo (or Expo via Xcode or Web)(both within Client and Server branch)
 ```
 npm start
 ```
