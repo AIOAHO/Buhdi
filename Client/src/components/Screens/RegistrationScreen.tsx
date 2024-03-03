@@ -5,9 +5,9 @@ import { register, validateEmail, validatePassword } from '../../utils/auth'; //
 
 
 export default function RegistrationScreen({ navigation }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [error, setError] = useState<string>('');
 
   const handleRegistration = async () => {
     // Clear any previous errors

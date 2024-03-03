@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Platform } from 'react-native';
+import { Dimensions, View, StyleSheet, Platform } from 'react-native';
 import { Image } from 'expo-image';
 import { TextInput, Button, Text, Headline, HelperText } from 'react-native-paper';
 import * as AuthSession from 'expo-auth-session';
@@ -10,6 +10,9 @@ import { login } from '../../utils/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../../utils/api';
 import googleLogo from '../../../assets/googleLogo.png'; // Adjust the path as needed
+
+const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState<string>('');
@@ -117,6 +120,9 @@ export default function LoginScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.linearTop}/>
+      <View style={styles.circleRight1}/>
+      <View style={styles.circleRight2}/>
+      <View style={styles.circleLeft}/>
       <View style={styles.formContainer}>
         <Headline style={styles.headline}>Login</Headline>
         <TextInput
@@ -126,6 +132,12 @@ export default function LoginScreen({ navigation }) {
           mode="outlined"
           autoCapitalize="none"
           keyboardType="email-address"
+          theme={{ colors: { onSurfaceVariant: '#DBCBD8'} }} // This targets the placeholder text color
+          textColor='#DBCBD8' // Targets text
+          selectionColor='#DBCBD8' // Targets text when selected
+          outlineColor='#D3D3D3' // Targets outline unselected
+          activeOutlineColor='#DBCBD8' // Targets outline when selected
+          outlineStyle={{ backgroundColor: 'rgba(191, 191, 191, 0.25)', borderRadius: 6 }} // Background color
           style={styles.input}
         />
         <TextInput
@@ -134,6 +146,12 @@ export default function LoginScreen({ navigation }) {
           value={password}
           onChangeText={setPassword}
           mode="outlined"
+          theme={{ colors: { onSurfaceVariant: '#DBCBD8' } }} // This targets the placeholder text color
+          textColor='#DBCBD8' // Targets text
+          selectionColor='#DBCBD8' // Targets text when selected
+          outlineColor='#D3D3D3' // Targets outline unselected
+          activeOutlineColor='#DBCBD8' // Targets outline when selected
+          outlineStyle={{ backgroundColor: 'rgba(191, 191, 191, 0.25)', borderRadius: 6 }} // Background color
           style={styles.input}
         />
         <HelperText style={{ color: '#E85F5C', height: 25}}type="error">{error}</HelperText>
@@ -171,9 +189,45 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
   },
+  circleRight1: {
+    width: width * 0.45,
+    height: height * 0.4,
+    maxWidth: 500,
+    maxHeight: 500,
+    borderWidth: 7,
+    borderRadius: 50,
+    borderColor: '#E4FDE1',
+    position: 'absolute',
+    right: -100,
+    top: -100,
+  },
+  circleRight2: {
+    width: width * 0.32,
+    height: height * 0.7,
+    maxWidth: 400,
+    maxHeight: 800,
+    borderWidth: 7,
+    borderRadius: 50,
+    borderColor: '#E85F5C',
+    position: 'absolute',
+    right: -100,
+    top: -100,
+  },
+  circleLeft: {
+    width: width * 0.9,
+    height: height * 0.3,
+    maxWidth: 500,
+    maxHeight: 500,
+    borderWidth: 7,
+    borderRadius: 50,
+    borderColor: '#7EBDC2',
+    position: 'absolute',
+    left: -50,
+    bottom: -50,
+  },
   formContainer: {
-    width: '100%',
-    maxWidth: 400, // Set a maximum width for the container
+    width: width * 0.8, // Ensure buttons take the 80% width of the container
+    maxWidth: 350, // Limit the maximum width of buttons
   },
   headline: {
     textAlign: 'center',
@@ -181,23 +235,19 @@ const styles = StyleSheet.create({
     color: '#E4FDE1',
   },
   input: {
-    color: '#E4FDE1',
-    flex: 1,
     height: 40,
-    justifyContent: "center",
-    backgroundColor: 'rgba(191, 191, 191, 0.25)',
     marginBottom: 10,
   },
   button: {
     marginTop: 10,
-    width: '100%', // Ensure buttons take the full width of the container
-    maxWidth: 400, // Limit the maximum width of buttons
+    width: width * 0.8, // Ensure buttons take the 80% width of the container
+    maxWidth: 350, // Limit the maximum width of buttons
     backgroundColor: '#E4FDE1',
     color: '#59656F',
   },
   googleButton: {
-    width: '100%', // Full width button
-    maxWidth: 400, // Match the width with other elements
+    width: width * 0.8, // Ensure buttons take the 80% width of the container
+    maxWidth: 350, // Limit the maximum width of buttons
     marginTop: 10,
   },
   googleButtonContent: {
@@ -214,6 +264,7 @@ const styles = StyleSheet.create({
   registerText: {
     marginTop: 10,
     textAlign: 'center',
+    color: '#E4FDE1',
     },
   registerLink: {
     marginTop: 10,
