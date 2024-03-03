@@ -8,7 +8,7 @@ import { Platform } from 'react-native';
 
 export default function ChatScreen() {
   const [messages, setMessages] = useState<Message[]>([]);
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState<string>('');
   const navigation = useNavigation();
   const flatListRef = useRef(null);
   const animation = new Animated.Value(0);

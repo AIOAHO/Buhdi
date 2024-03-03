@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Dimensions, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import {
   useFonts,
   BigShouldersStencilDisplay_400Regular,
@@ -8,6 +8,8 @@ import { Inter_400Regular } from '@expo-google-fonts/inter';
 
 import { logout } from '../../utils/auth'; // Import your logout logic
 
+const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
 
 export default function HomepageScreen({ navigation }) {
   let [expoFonts] : [boolean, Error | null] = useFonts({
@@ -39,7 +41,7 @@ export default function HomepageScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Welcome</Text>
+      <Text style={styles.header}>Welcome to</Text>
       <Text style={styles.title}>Budhi</Text>
       <View style={styles.linearTop}/>
       <View style={styles.circleRight1}/>
@@ -90,7 +92,8 @@ const styles = StyleSheet.create({
     margin: 10,
     paddingHorizontal: 16,
     paddingVertical: 8,
-    width: '20%',
+    width: width * 0.8,
+    maxWidth: 350,
     borderWidth: 0.5,
     borderRadius: 16,
     borderColor: '#E4FDE1',
@@ -103,7 +106,8 @@ const styles = StyleSheet.create({
     margin: 10,
     paddingHorizontal: 16,
     paddingVertical: 8,
-    width: '20%',
+    width: width * 0.8,
+    maxWidth: 350,
     borderWidth: 0.5,
     borderRadius: 16,
     borderColor: '#E4FDE1',
@@ -111,8 +115,10 @@ const styles = StyleSheet.create({
     color: '#E4FDE1',
   },
   circleRight1: {
-    width: 400,
-    height: 400,
+    width: width * 0.45,
+    height: height * 0.4,
+    maxWidth: 500,
+    maxHeight: 500,
     borderWidth: 7,
     borderRadius: 50,
     borderColor: '#E4FDE1',
@@ -121,8 +127,10 @@ const styles = StyleSheet.create({
     top: -100,
   },
   circleRight2: {
-    width: 300,
-    height: 600,
+    width: width * 0.32,
+    height: height * 0.7,
+    maxWidth: 400,
+    maxHeight: 800,
     borderWidth: 7,
     borderRadius: 50,
     borderColor: '#E85F5C',
@@ -131,14 +139,16 @@ const styles = StyleSheet.create({
     top: -100,
   },
   circleLeft: {
-    width: 400,
-    height: 400,
+    width: width * 0.9,
+    height: height * 0.3,
+    maxWidth: 500,
+    maxHeight: 500,
     borderWidth: 7,
     borderRadius: 50,
     borderColor: '#7EBDC2',
     position: 'absolute',
-    left: -100,
-    bottom: -100,
+    left: -50,
+    bottom: -50,
   },
   linearTop: {
     width: '120%',
