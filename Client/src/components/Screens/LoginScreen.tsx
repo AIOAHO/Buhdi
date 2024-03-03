@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Platform } from 'react-native';
+import { Dimensions, View, StyleSheet, Platform } from 'react-native';
 import { Image } from 'expo-image';
 import { TextInput, Button, Text, Headline, HelperText } from 'react-native-paper';
 import * as AuthSession from 'expo-auth-session';
@@ -11,16 +11,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../../utils/api';
 import googleLogo from '../../../assets/googleLogo.png'; // Adjust the path as needed
 
-
-
+const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
 
 export default function LoginScreen({ navigation }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const redirectUri = process.env.EXPO_PUBLIC_GAUTH_REDIRECT_URI
-
-
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [error, setError] = useState<string>('');
+  const redirectUri = process.env.EXPO_PUBLIC_GAUTH_REDIRECT_URI;
 
   // Start of google auth viaw
   WebBrowser.maybeCompleteAuthSession();
@@ -45,11 +43,8 @@ export default function LoginScreen({ navigation }) {
     discovery
   );
 
-
-  
-
-
-
+  console.log(`Redirect URI: ${request?.redirectUri}`);
+  console.log ('token');
 
   useEffect(() => {
     if (response?.type === 'success') {
@@ -85,7 +80,7 @@ export default function LoginScreen({ navigation }) {
         }
         
         // Navigate to the Homepage screen
-        navigation.navigate('Homepage');
+        navigation.navigate('Home');
       } else {
         // Handle unsuccessful login
         setError('Failed to log in with Google. Please try again.');
@@ -100,7 +95,7 @@ export default function LoginScreen({ navigation }) {
     try {
       const success = await login(email, password); // Assuming this function returns a boolean
       if (success) {
-        navigation.navigate('Homepage');
+        navigation.navigate('Home');
       } else {
         setError('Invalid email or password');
       }
@@ -128,41 +123,57 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Headline style={styles.headline}>Login</Headline>
-      <TextInput
-        label="Email"
-        value={email}
-        onChangeText={setEmail}
-        mode="outlined"
-        autoCapitalize="none"
-        keyboardType="email-address"
-        style={styles.input}
-      />
-      <TextInput
-        label="Password"
-        secureTextEntry
-        value={password}
-        onChangeText={setPassword}
-        mode="outlined"
-        style={styles.input}
-      />
-      {error ? <HelperText type="error">{error}</HelperText> : null}
-      
-      <Button mode="contained" onPress={handleLogin} style={styles.button}>
-        Login
-      
-      </Button>
+      <View style={styles.linearTop}/>
+      <View style={styles.circleRight1}/>
+      <View style={styles.circleRight2}/>
+      <View style={styles.circleLeft}/>
+      <View style={styles.formContainer}>
+        <Headline style={styles.headline}>Login</Headline>
+        <TextInput
+          label="Email"
+          value={email}
+          onChangeText={setEmail}
+          mode="outlined"
+          autoCapitalize="none"
+          keyboardType="email-address"
+          theme={{ colors: { onSurfaceVariant: '#DBCBD8'} }} // This targets the placeholder text color
+          textColor='#DBCBD8' // Targets text
+          selectionColor='#DBCBD8' // Targets text when selected
+          outlineColor='#D3D3D3' // Targets outline unselected
+          activeOutlineColor='#DBCBD8' // Targets outline when selected
+          outlineStyle={{ backgroundColor: 'rgba(191, 191, 191, 0.25)', borderRadius: 6 }} // Background color
+          style={styles.input}
+        />
+        <TextInput
+          label="Password"
+          secureTextEntry
+          value={password}
+          onChangeText={setPassword}
+          mode="outlined"
+          theme={{ colors: { onSurfaceVariant: '#DBCBD8' } }} // This targets the placeholder text color
+          textColor='#DBCBD8' // Targets text
+          selectionColor='#DBCBD8' // Targets text when selected
+          outlineColor='#D3D3D3' // Targets outline unselected
+          activeOutlineColor='#DBCBD8' // Targets outline when selected
+          outlineStyle={{ backgroundColor: 'rgba(191, 191, 191, 0.25)', borderRadius: 6 }} // Background color
+          style={styles.input}
+        />
+        <HelperText style={{ color: '#E85F5C', height: 25}}type="error">{error}</HelperText>
+        
+        <Button onPress={handleLogin} style={styles.button}>
+          Login
+        </Button>
 
-      <GoogleSignInButton onPress={() => promptAsync()} disabled={!request} />
+        <GoogleSignInButton onPress={() => promptAsync()} disabled={!request} />
 
 
-      <Text style={styles.registerText}>
-        Don't have an account?{' '}
-        <Text style={styles.registerLink} onPress={() => navigation.navigate('Registration')}>
-          Register here
+        <Text style={styles.registerText}>
+          Don't have an account?{' '}
+          <Text style={styles.registerLink} onPress={() => navigation.navigate('Registration')}>
+            Register here
+          </Text>
         </Text>
-      </Text>
-
+      </View>
     </View>
   );
 }
@@ -171,28 +182,76 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    padding: 20,
     alignItems: 'center',
     width: '100%',
-    maxWidth: 400, // Set a maximum width for the container
-    alignSelf: 'center',
+  },
+  linearTop: {
+    width: '120%',
+    borderTopWidth: 7,
+    borderRadius: 50,
+    borderColor: '#DBCBD8',
+    position: 'absolute',
+    top: 0,
+  },
+  circleRight1: {
+    width: width * 0.45,
+    height: height * 0.4,
+    maxWidth: 500,
+    maxHeight: 500,
+    borderWidth: 7,
+    borderRadius: 50,
+    borderColor: '#E4FDE1',
+    position: 'absolute',
+    right: -100,
+    top: -100,
+  },
+  circleRight2: {
+    width: width * 0.32,
+    height: height * 0.7,
+    maxWidth: 400,
+    maxHeight: 800,
+    borderWidth: 7,
+    borderRadius: 50,
+    borderColor: '#E85F5C',
+    position: 'absolute',
+    right: -100,
+    top: -100,
+  },
+  circleLeft: {
+    width: width * 0.9,
+    height: height * 0.3,
+    maxWidth: 500,
+    maxHeight: 500,
+    borderWidth: 7,
+    borderRadius: 50,
+    borderColor: '#7EBDC2',
+    position: 'absolute',
+    left: -50,
+    bottom: -50,
+  },
+  formContainer: {
+    width: width * 0.8, // Ensure buttons take the 80% width of the container
+    maxWidth: 350, // Limit the maximum width of buttons
   },
   headline: {
     textAlign: 'center',
     marginBottom: 20,
+    color: '#E4FDE1',
   },
   input: {
+    height: 40,
     marginBottom: 10,
-    width: '100%', // Ensure inputs take the full width of the container
   },
   button: {
     marginTop: 10,
-    width: '100%', // Ensure buttons take the full width of the container
-    maxWidth: 400, // Limit the maximum width of buttons
+    width: width * 0.8, // Ensure buttons take the 80% width of the container
+    maxWidth: 350, // Limit the maximum width of buttons
+    backgroundColor: '#E4FDE1',
+    color: '#59656F',
   },
   googleButton: {
-    width: '100%', // Full width button
-    maxWidth: 400, // Match the width with other elements
+    width: width * 0.8, // Ensure buttons take the 80% width of the container
+    maxWidth: 350, // Limit the maximum width of buttons
     marginTop: 10,
   },
   googleButtonContent: {
@@ -203,17 +262,18 @@ const styles = StyleSheet.create({
     height: 24,
   },
   googleText: {
+    color: '#E4FDE1',
 //placeholder
   },
   registerText: {
     marginTop: 10,
     textAlign: 'center',
+    color: '#E4FDE1',
     },
-
   registerLink: {
     marginTop: 10,
     textAlign: 'center',
-    color: '#6200ee',
+    color: '#E4FDE1',
     fontWeight: 'bold',
   },
 });

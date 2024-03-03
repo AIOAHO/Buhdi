@@ -1,7 +1,8 @@
 import React from 'react';
-
+import { View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+
 import LoginScreen from '../components/Screens/LoginScreen';
 import RegistrationScreen from '../components/Screens/RegistrationScreen';
 import HomepageScreen from '../components/Screens/HomepageScreen';
@@ -27,16 +28,31 @@ const linking = {
 
 export default function AppNavigator() {
 
+  const screenOptions: any = {
+    headerShown: true,
+    headerShadowVisible: false,
+    headerTitleAlign: 'center',
+    headerTintColor: '#E4FDE1',
+    headerBackground: () => <View style={{flex: 1, backgroundColor: '#59656F'}}/>,
+    headerBackTitleVisible: false,
+    headerTitleStyle: {
+      color: '#E4FDE1',
+    },
+    cardStyle: {
+      backgroundColor: '#59656F'
+    },
+  };
+
   return (
     <NavigationContainer linking={linking}>
-      <Stack.Navigator>
-        <Stack.Screen name="WaitingList" component={WaitingListScreen}/>
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Registration" component={RegistrationScreen} />
-        <Stack.Screen name="Homepage" component={HomepageScreen} />
-        <Stack.Screen name="EnneagramQuiz" component={EnneagramQuiz} />
-        <Stack.Screen name="EnneagramResults" component={EnneagramResults} />
-        <Stack.Screen name="Chat" component={ChatScreen} />
+      <Stack.Navigator initialRouteName="Login">
+        <Stack.Screen name="WaitingList" component={WaitingListScreen} options={screenOptions}/>
+        <Stack.Screen name="Login" component={LoginScreen} options={screenOptions}/>
+        <Stack.Screen name="Registration" component={RegistrationScreen} options={screenOptions}/>
+        <Stack.Screen name="Home" component={HomepageScreen} options={screenOptions}/>
+        <Stack.Screen name="EnneagramQuiz" component={EnneagramQuiz} options={screenOptions}/>
+        <Stack.Screen name="EnneagramResults" component={EnneagramResults} options={screenOptions}/>
+        <Stack.Screen name="Chat" component={ChatScreen} options={screenOptions}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
