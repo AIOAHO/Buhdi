@@ -45,7 +45,7 @@ export default function AppNavigator() {
 
   return (
     <NavigationContainer linking={linking}>
-      <Stack.Navigator initialRouteName="Login">
+      <Stack.Navigator>
         <Stack.Screen name="WaitingList" component={WaitingListScreen} options={screenOptions}/>
         <Stack.Screen name="Login" component={LoginScreen} options={screenOptions}/>
         <Stack.Screen name="Registration" component={RegistrationScreen} options={screenOptions}/>
