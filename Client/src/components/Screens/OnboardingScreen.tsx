@@ -16,9 +16,9 @@ export default function OnboardingScreen({ navigation }) {
   });
 
 
-  const handleQuizButtonPress = () : void => {
+  const handleHomeButtonPress = () : void => {
     // Navigate to the Quiz screen when the Quiz button is pressed
-    navigation.navigate('EnneagramQuiz');
+    navigation.navigate('Home');
   };
 
   const handleAssistantButtonPress = () : void => {
@@ -33,33 +33,33 @@ export default function OnboardingScreen({ navigation }) {
       <View style={styles.circleRight1}/>
       <View style={styles.circleRight2}/>
       <View style={styles.circleLeft}/>
-      <View style={{ flex: 1, flexDirection: 'row'}}>
-        <View style={{ flex: 1, flexDirection: 'column'}}>
-          <Text>Train your Budhi by taking the Enneagram Quiz!</Text>
-          <Text>You can take the quiz now or do it anytime</Text>
+      <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center'}}>
+        <View style={{ minWidth: 120, maxWidth: 250 }}>
+          <Text style={styles.text}>Train your Budhi by taking the Enneagram Quiz!</Text>
+          <Text style={styles.text}>You can take the quiz now or do it anytime</Text>
         </View>
 
-        <View>
-          <Text>Your Budhi is your personal assistant, ask anything that comes to mind.</Text>
+        <View style={{ minWidth: 120, maxWidth: 250, marginHorizontal: width * 0.1}}>
+          <Text style={styles.text}>Your Budhi is your personal assistant, ask anything that comes to mind.</Text>
         </View>
 
-        <View>
-          <Text>Hey</Text>
+        <View style={{ minWidth: 120, maxWidth: 250}}>
+          <Text style={styles.text}>Plenty more features coming!</Text>
         </View>
       </View>
       <TouchableOpacity
-        onPress={handleQuizButtonPress}
-        style={styles.buttonSolid}
+        onPress={handleHomeButtonPress}
+        style={styles.buttonOutlined}
       >
-        Check
+        Check it out!
       </TouchableOpacity>
 
-      <TouchableOpacity
+      {/* <TouchableOpacity
         onPress={handleAssistantButtonPress}
         style={styles.buttonSolid}
       >
-        Assistant
-      </TouchableOpacity>
+        Talk to Budhi now
+      </TouchableOpacity> */}
     </View>
   );
 }
@@ -69,16 +69,21 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  header: {
-    fontSize: 30,
-    fontFamily: 'Inter_400Regular',
-    color: '#E4FDE1',
+    width: '100%',
+    marginBottom: 48,
   },
   title: {
-    fontSize: 130,
+    marginTop: 24,
+    fontSize: 90,
+    marginLeft: 16,
     fontFamily: 'BigShouldersStencilDisplay_400Regular',
     color: '#E4FDE1',
+  },
+  text: {
+    fontSize: 20,
+    fontWeight: '400',
+    color: '#E4FDE1',
+    textAlign: 'center',
   },
   buttonSolid: {
     alignItems: 'center',
@@ -141,7 +146,7 @@ const styles = StyleSheet.create({
     borderColor: '#7EBDC2',
     position: 'absolute',
     left: -50,
-    bottom: -50,
+    bottom: -90,
   },
   linearTop: {
     width: '120%',

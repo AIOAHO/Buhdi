@@ -10,6 +10,7 @@ import EnneagramQuiz from '../components/Screens/EnneagramQuizScreen';
 import EnneagramResults from '../components/Screens/EnneagramResultsScreen';
 import ChatScreen from '../components/Screens/ChatScreen';
 import WaitingListScreen from '../components/Screens/WaitingListScreen';
+import OnboardingScreen from '../components/Screens/OnboardingScreen';
 
 const Stack = createStackNavigator();
 const linking = {
@@ -23,8 +24,6 @@ const linking = {
     },
  },
 };
-
-
 
 export default function AppNavigator() {
 
@@ -49,6 +48,7 @@ export default function AppNavigator() {
         <Stack.Screen name="WaitingList" component={WaitingListScreen} options={screenOptions}/>
         <Stack.Screen name="Login" component={LoginScreen} options={screenOptions}/>
         <Stack.Screen name="Registration" component={RegistrationScreen} options={screenOptions}/>
+        <Stack.Screen name="Onboarding" component={OnboardingScreen} options={screenOptions}/>
         <Stack.Screen name="Home" component={HomepageScreen} options={screenOptions}/>
         <Stack.Screen name="EnneagramQuiz" component={EnneagramQuiz} options={screenOptions}/>
         <Stack.Screen name="EnneagramResults" component={EnneagramResults} options={screenOptions}/>
