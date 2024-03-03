@@ -30,7 +30,7 @@ export default function RegistrationScreen({ navigation }) {
       const success = await register(email, password);
       if (success) {
         // Navigate to the Homepage screen upon successful registration
-        navigation.navigate('Home');
+        navigation.navigate('Onboarding');
       } else {
         // If registration is not successful, inform the user
         setError('Registration failed. Please try again.');
