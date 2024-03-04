@@ -48,7 +48,7 @@ export const sendMessage = async (req: Request, res: Response) => {
     //if (!user.assistantId) {
     //  
     //  const assistantId = await createOpenAIAssistant(userId);
-      user.assistantId = "asst_vBJZSChmL9e5bRirX3GNZtCT";
+      user.assistantId = "asst_1oTNYCXd7su5f2hvKMCbtYef";
     //  await user.save();
     //}
 

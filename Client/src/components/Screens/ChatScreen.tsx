@@ -1,16 +1,19 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, TextInput, FlatList, StyleSheet, Animated } from 'react-native';
+import { KeyboardAvoidingView, Dimensions, View, TextInput, FlatList, StyleSheet, Animated } from 'react-native';
 import { Button, Card, Title, Paragraph, Avatar } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import api from '../../utils/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
 
+const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
+
 export default function ChatScreen() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState<string>('');
+  const flatListRef = useRef<FlatList>(null);
   const navigation = useNavigation();
-  const flatListRef = useRef(null);
   const animation = new Animated.Value(0);
 
   interface Message {
@@ -55,6 +58,7 @@ export default function ChatScreen() {
             if (message.sender === 'Placeholder') {
               return { ...message, sender: 'Buhdi', content: response.data.response };
             }
+            setTimeout(() => flatListRef.current?.scrollToEnd({ animated: true }), 100);
             return message;
             }));
         } catch (error) {
@@ -68,50 +72,58 @@ export default function ChatScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <Card>
-        <Card.Title title="Buhdi" subtitle="Always here for you." left={props => <Avatar.Icon {...props} icon="robot" />} />
-      </Card>
-      <FlatList
-        data={messages}
-        renderItem={({ item }) => {
-          if (item.sender === 'Placeholder') {
-             return (
-               <Card style={styles.placeholderCard}>
-                 <Card.Title title="Buhdi" />
-                 <Card.Content>
-                   <Paragraph>...</Paragraph>
-                 </Card.Content>
-               </Card>
-             );
-          }
-          return (
-             <Card style={styles.card}>
-               <Card.Title title={item.sender} />
-               <Card.Content>
-                 <Paragraph>{item.content}</Paragraph>
-               </Card.Content>
-             </Card>
-          );
-         }}
-         
-        keyExtractor={(item, index) => index.toString()}
-        ref={flatListRef}
-        onContentSizeChange={() => flatListRef.current.scrollToEnd({ animated: true })}
-        onLayout={() => flatListRef.current.scrollToEnd({ animated: true })}
-      />
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          value={input}
-          onChangeText={setInput}
-          placeholder="Type your message..."
-          onSubmitEditing={handleSendMessage} // Add this line
-          returnKeyType="send" // Optional: changes the return key to say "Send"
+    <KeyboardAvoidingView 
+    style={{ flex: 1 }}
+    behavior={Platform.OS === "ios" ? "padding" : "height"}
+    keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 0}
+    >
+      <View style={styles.container}>
+        <Card>
+          <Card.Title title="Buhdi" subtitle="Always here for you." left={props => <Avatar.Icon {...props} icon="robot" />} />
+        </Card>
+        <FlatList
+        
+          data={messages}
+          renderItem={({ item }) => {
+            if (item.sender === 'Placeholder') {
+              return (
+                <Card style={styles.placeholderCard}>
+                  <Card.Title title="Buhdi" />
+                  <Card.Content>
+                    <Paragraph>...</Paragraph>
+                  </Card.Content>
+                </Card>
+              );
+            }
+            return (
+              <Card style={styles.card}>
+                <Card.Title title={item.sender} />
+                <Card.Content>
+                  <Paragraph>{item.content}</Paragraph>
+                </Card.Content>
+              </Card>
+            );
+          }}
+          
+          keyExtractor={(item, index) => index.toString()}
+          ref={flatListRef}
+          onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
+          onLayout={() => flatListRef.current?.scrollToEnd({ animated: true })}
+          contentContainerStyle={styles.messageListContainer}
         />
-        <Button mode="contained" onPress={handleSendMessage}>Send</Button>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            value={input}
+            onChangeText={setInput}
+            placeholder="Type your message..."
+            onSubmitEditing={handleSendMessage}
+            returnKeyType="send"
+          />
+          <Button mode="contained" onPress={handleSendMessage}>Send</Button>
+        </View>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -120,14 +132,23 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
   },
+  messageListContainer: {
+    flex: 1, // Makes sure the message list can grow
+    paddingBottom: 50,
+  },
   inputContainer: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginTop: 10,
+    padding: 10,
+    backgroundColor: '#fff', // Or any other color
+    // Ensure there's enough space for the text input and button
   },
   input: {
     flex: 1,
+    fontSize: 16,
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 5,
