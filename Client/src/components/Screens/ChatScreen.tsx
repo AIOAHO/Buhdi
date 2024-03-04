@@ -5,16 +5,18 @@ import { useNavigation } from '@react-navigation/native';
 import api from '../../utils/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
+
 
 export default function ChatScreen() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState<string>('');
   const flatListRef = useRef<FlatList>(null);
-  const navigation = useNavigation();
-  const animation = new Animated.Value(0);
+
 
   interface Message {
     sender: string;
@@ -58,7 +60,7 @@ export default function ChatScreen() {
             if (message.sender === 'Placeholder') {
               return { ...message, sender: 'Buhdi', content: response.data.response };
             }
-            setTimeout(() => flatListRef.current?.scrollToEnd({ animated: true }), 100);
+            setTimeout(() => flatListRef.current?.scrollToEnd({ animated: true }), 500);
             return message;
             }));
         } catch (error) {
@@ -75,15 +77,19 @@ export default function ChatScreen() {
     <KeyboardAvoidingView 
     style={{ flex: 1 }}
     behavior={Platform.OS === "ios" ? "padding" : "height"}
-    keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 0}
+    keyboardVerticalOffset={Platform.OS === "ios" ? 10 : 50}
     >
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <Card>
           <Card.Title title="Buhdi" subtitle="Always here for you." left={props => <Avatar.Icon {...props} icon="robot" />} />
         </Card>
         <FlatList
-        
           data={messages}
+          contentContainerStyle={{ paddingBottom: 20}}
+          keyExtractor={(item, index) => index.toString()}
+          ref={flatListRef}
+          style={{height: height * 0.75, paddingBottom: 30 }}
+          onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
           renderItem={({ item }) => {
             if (item.sender === 'Placeholder') {
               return (
@@ -104,12 +110,7 @@ export default function ChatScreen() {
               </Card>
             );
           }}
-          
-          keyExtractor={(item, index) => index.toString()}
-          ref={flatListRef}
-          onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
-          onLayout={() => flatListRef.current?.scrollToEnd({ animated: true })}
-          contentContainerStyle={styles.messageListContainer}
+
         />
         <View style={styles.inputContainer}>
           <TextInput
@@ -122,7 +123,7 @@ export default function ChatScreen() {
           />
           <Button mode="contained" onPress={handleSendMessage}>Send</Button>
         </View>
-      </View>
+      </SafeAreaView>
     </KeyboardAvoidingView>
   );
 }
@@ -131,10 +132,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-  },
-  messageListContainer: {
-    flex: 1, // Makes sure the message list can grow
-    paddingBottom: 50,
+    width: width,
+    height: height,
+    paddingBottom: 10,
   },
   inputContainer: {
     position: 'absolute',
@@ -156,22 +156,12 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     marginRight: 10,
   },
-  typingContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  dot: {
-    height: 8,
-    width: 8,
-    borderRadius: 4,
-    backgroundColor: '#000',
-    marginHorizontal: 2,
-  },
   card: {
-    margin: 10
+    margin: 10,
+    padding: 10,
     },
   placeholderCard: {
-    margin: 10
+    margin: 10,
+    padding: 10,
     },
 });

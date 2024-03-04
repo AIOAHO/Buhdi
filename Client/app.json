@@ -37,8 +37,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png",
-
-      
+      "meta": {
+        "viewport": "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no",
+        "apple-mobile-web-app-capable": "yes",
+        "apple-mobile-web-app-status-bar-style": "default"
+      }
     },
     "extra": {
       "eas": {
