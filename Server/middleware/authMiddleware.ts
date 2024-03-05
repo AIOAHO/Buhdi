@@ -27,8 +27,14 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
   // Verify the JWT token
   jwt.verify(token, JWT_SECRET, (err, decoded) => {
     if (err) {
-      console.error('Token verification error:', err);
-      return res.status(401).json({ message: 'Unauthorized: Invalid token' });
+      if (err instanceof jwt.TokenExpiredError) {
+        console.log(`Token expired at: ${err.expiredAt}`);
+        // Handle the expired token (e.g., redirect to login, prompt for refresh, etc.)
+        return res.status(401).json({ message: 'Unauthorized: Token expired' });
+      } else {
+        console.error('Token verification error:', err);
+        return res.status(401).json({ message: 'Unauthorized: Invalid token' });
+      }
     }
 
     // Check if decoded is a string (which shouldn't happen for a correctly formed JWT)
@@ -39,5 +45,5 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
       req.user = decoded;
     }
     next();
-  });
+ });
 };

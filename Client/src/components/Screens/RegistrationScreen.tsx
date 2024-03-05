@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { TextInput, Button, Headline, HelperText } from 'react-native-paper';
-import { register, validateEmail, validatePassword } from '../../utils/auth'; // Make sure these are exported
+import { register, login, validateEmail, validatePassword } from '../../utils/auth'; // Make sure these are exported
 
 
 export default function RegistrationScreen({ navigation }) {
@@ -24,24 +24,29 @@ export default function RegistrationScreen({ navigation }) {
       setError('Password must be at least 8 characters long and include a number, an uppercase letter, a lowercase letter, and a special character.');
       return;
     }
-
-    // Attempt to register the user
     try {
       const success = await register(email, password);
       if (success) {
-        // Navigate to the Homepage screen upon successful registration
-        navigation.navigate('Onboarding');
+        // After successful registration, attempt to log in the user to get the JWT token
+        const loggedIn = await login(email, password);
+        if (loggedIn) {
+          // Navigate to the Homepage screen upon successful login
+          navigation.navigate('Onboarding');
+        } else {
+          // If login is not successful, inform the user
+          setError('Login failed after registration. Please try again.');
+        }
       } else {
         // If registration is not successful, inform the user
         setError('Registration failed. Please try again.');
       }
-    } catch (registrationError) {
+   } catch (registrationError) {
       // Handle any other errors
       setError('An unexpected error occurred. Please try again.');
       console.error('Registration error:', registrationError);
-    }
+   }
   };
-
+  
   return (
     <View style={styles.container}>
       <View style={styles.linearTop}/>

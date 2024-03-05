@@ -60,11 +60,9 @@ export const register = async (email: string, password: string): Promise<boolean
 
   try {
     const response = await api.post('/register', { email, password });
-
     if (response.status === 201) {
       return true;
     }
-
     return false;
   } catch (error) {
     console.error('Registration error:', error);

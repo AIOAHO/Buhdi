@@ -88,7 +88,7 @@ export default function ChatScreen() {
           contentContainerStyle={{ paddingBottom: 20}}
           keyExtractor={(item, index) => index.toString()}
           ref={flatListRef}
-          style={{height: height * 0.75, paddingBottom: 30 }}
+          style={{height: height * 0.75 }}
           onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
           renderItem={({ item }) => {
             if (item.sender === 'Placeholder') {

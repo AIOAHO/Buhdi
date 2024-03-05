@@ -41,10 +41,22 @@ export const register = async (req: Request, res: Response) => {
 
     // Save the new user to the database
     await newUser.save();
+    console.log(`User ${email} has been moved from the waiting list to the main user list.`);
+
 
     // Optionally, update or remove the entry from the WaitingList to reflect that they've been registered
     // For example, to remove the entry:
     await WaitingList.findOneAndDelete({ email });
+
+    // Check if JWT_SECRET is defined
+    if (!process.env.JWT_SECRET) {
+      throw new Error('JWT_SECRET is not defined');
+    }
+
+    // Generate and send a JWT token with an expiration time (e.g., 1 hour)
+    const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, {
+      expiresIn: '1h', // Set the token to expire in 1 hour
+     });
 
     // Respond with successful registration
     res.status(201).json({ message: 'Registration successful.' });

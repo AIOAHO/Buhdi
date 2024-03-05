@@ -5,7 +5,10 @@ import { enneagramTypeMapping } from '../Quiz/EnneagramQuestions';
 import api from '../../utils/api';
 import { Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import CircularBarChart from '../Results/CircularBarChart';
+
+
+const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
 
 const EnneagramResults = ({ route, navigation }) => {
   const { highestScoreType, typeScores } = route.params;
@@ -67,9 +70,6 @@ const EnneagramResults = ({ route, navigation }) => {
             <ActivityIndicator animating={true} size="large" />
           ) : (
             <>
-              
-              
-              
               <Text style={styles.resultText}>{result}</Text>
             </>
           )}
@@ -90,6 +90,7 @@ const EnneagramResults = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    height: height,
     justifyContent: 'center',
     padding: 20,
     alignItems: 'center',

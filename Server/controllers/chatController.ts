@@ -17,7 +17,7 @@ export const sendMessage = async (req: Request, res: Response) => {
     const token = req.headers.authorization?.split(' ')[1];
     
     if (!token) {
-      
+      console.log('No token provided in the request header.');
       return res.status(401).json({ message: 'No token provided' });
     }
 
@@ -30,15 +30,16 @@ export const sendMessage = async (req: Request, res: Response) => {
     // Verify the token and use type assertion
     const decodedToken = jwt.verify(token, jwtSecret) as JwtPayload;
     const userId = decodedToken.userId;
+    console.log(`Token verified for user ID: ${userId}`);
 
     // Log received message
     const { message } = req.body;
-    
+    console.log(`Received message from user ID ${userId}: ${message}`);
 
     // Retrieve the user Id from mongo
     const user = await User.findById(userId);
     if (!user) {
-      
+      console.log(`User with ID ${userId} not found in the database.`);
       return res.status(404).json({ message: 'User not found' });
     }
     
@@ -54,7 +55,7 @@ export const sendMessage = async (req: Request, res: Response) => {
 
     // Retrieve ThreadID from Mongo
     if (!user.threadId) {
-      
+      console.log(`User with ID ${userId} has assistantId: ${user.assistantId} and threadId: ${user.threadId}`);
       const thread = await openai.beta.threads.create();
       user.threadId = thread.id;
       await user.save();
