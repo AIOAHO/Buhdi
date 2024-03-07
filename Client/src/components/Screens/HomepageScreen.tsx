@@ -38,6 +38,10 @@ export default function HomepageScreen({ navigation }) {
    navigation.navigate('Chat');
   };
   
+  const handleFeedbackButtonPress = () : void => {
+    // Navigate to the Assistant screen when the Assistant button is pressed
+    navigation.navigate('Feedback');
+   };
 
   return (
     <View style={styles.container}>
@@ -59,6 +63,13 @@ export default function HomepageScreen({ navigation }) {
         style={styles.buttonSolid}
       >
         Assistant
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        onPress={handleFeedbackButtonPress}
+        style={styles.buttonSolid}
+      >
+        Feedback
       </TouchableOpacity>
 
       <TouchableOpacity

@@ -13,6 +13,7 @@
   "author": "Cornelis van Lith",
   "license": "ISC",
   "dependencies": {
+    "@notionhq/client": "^2.2.14",
     "@types/express-session": "^1.17.10",
     "axios": "^1.6.5",
     "bcrypt": "^5.1.1",

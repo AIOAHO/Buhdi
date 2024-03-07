@@ -11,7 +11,9 @@ const apiInstance = new SibApiV3Sdk.ContactsApi();
 
 export const addToWaitingList = async (req: Request, res: Response) => {
   console.log('addToWaitingList called'); // Log when the function is called
-  const { email } = req.body;
+  //sanitized email
+  const email = req.body.email.trim().toLowerCase();
+
   console.log('Email received:', email); // Log the received email
 
   try {
