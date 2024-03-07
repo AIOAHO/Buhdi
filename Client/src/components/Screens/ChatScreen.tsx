@@ -121,7 +121,7 @@ export default function ChatScreen() {
             onSubmitEditing={handleSendMessage}
             returnKeyType="send"
           />
-          <Button mode="contained" onPress={handleSendMessage}>Send</Button>
+          <Button style={{ backgroundColor: '#2E536F'}} textColor='#F7E8D8' mode="contained" onPress={handleSendMessage}>Send</Button>
         </View>
       </SafeAreaView>
     </KeyboardAvoidingView>
@@ -143,25 +143,29 @@ const styles = StyleSheet.create({
     bottom: 0,
     flexDirection: 'row',
     padding: 10,
-    backgroundColor: '#fff', // Or any other color
+    backgroundColor: '#F1C1BF', // Same as main background colour
     // Ensure there's enough space for the text input and button
   },
   input: {
     flex: 1,
     fontSize: 16,
     borderWidth: 1,
-    borderColor: '#ccc',
     borderRadius: 5,
     paddingHorizontal: 10,
     paddingVertical: 5,
     marginRight: 10,
+    backgroundColor: '#F1C1BF',
+    color: '#2E536F',
+    borderColor: 'rgba(46, 83, 111, 0.7)',
   },
   card: {
     margin: 10,
     padding: 10,
-    },
+    // backgroundColor: '#F7E8D8', // USER message background
+  },
   placeholderCard: {
     margin: 10,
     padding: 10,
-    },
+    // backgroundColor: '#2E536F', // BUDHI message background
+  },
 });

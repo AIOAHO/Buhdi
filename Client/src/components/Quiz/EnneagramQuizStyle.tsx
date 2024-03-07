@@ -6,12 +6,12 @@ const EnneagramQuizStyle = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         width: '100%',
-      },
+    },
     linearTop: {
     width: '120%',
     borderTopWidth: 7,
     borderRadius: 50,
-    borderColor: '#DBCBD8',
+    borderColor: '#2E536F',
     position: 'absolute',
     top: 0,
     },
@@ -21,8 +21,9 @@ const EnneagramQuizStyle = StyleSheet.create({
     },
     question: {
         marginBottom: 20, // Add a bottom margin to the Question component
+        backgroundColor: '#2E536F',
+        color: '#F7E8D8',
     },
-
     cardContainer: {
         marginVertical: 10,
         padding: 16,
@@ -41,6 +42,7 @@ const EnneagramQuizStyle = StyleSheet.create({
         fontWeight: 'bold',
         alignSelf: 'center',
         marginVertical: 10,
+        color: '#2E536F',
     },
     navigationContainer: {
         flexDirection: 'row',

@@ -115,17 +115,17 @@ export default function EnneagramQuiz() {
               {/* Wrap the Previous button in a View for left alignment */}
               <View style={{ flex: 1, alignItems: 'flex-start' }}>
                 {currentQuestionIndex > 0 && (
-                  <Button mode="contained" onPress={goToPreviousQuestion}>Previous</Button>
+                  <Button style={{ backgroundColor: '#2E536F'}} textColor='#F7E8D8' mode="contained" onPress={goToPreviousQuestion}>Previous</Button>
                 )}
               </View>
               
               {/* Wrap the Next and Submit buttons in a View for right alignment */}
               <View style={{ flex: 1, alignItems: 'flex-end', flexDirection: 'row', justifyContent: 'flex-end' }}>
                 {currentQuestionIndex < shuffledQuestions.length - 1 && (
-                  <Button mode="contained" onPress={goToNextQuestion}>Next</Button>
+                  <Button style={{ backgroundColor: '#2E536F'}} textColor='#F7E8D8' mode="contained" onPress={goToNextQuestion}>Next</Button>
                 )}
                 {currentQuestionIndex === shuffledQuestions.length - 1 && (
-                  <Button mode="contained" onPress={handleSubmit}>Submit</Button>
+                  <Button style={{ backgroundColor: '#2E536F'}} textColor='#F7E8D8' mode="contained" onPress={handleSubmit}>Submit</Button>
                 )}
               </View>
             </View>
