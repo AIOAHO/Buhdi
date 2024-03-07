@@ -23,28 +23,33 @@ export default function ChatScreen() {
     content: any;
   }
 
+  useEffect(() => {
+    // This useEffect will handle scrolling to the end after messages are updated.
+    if (messages.length > 0 && messages[messages.length - 1].sender === 'Buhdi') {
+      // Use a slight delay to ensure that the FlatList has updated.
+      setTimeout(() => flatListRef.current?.scrollToEnd({ animated: true }), 100);
+    }
+    console.log("scroll to end")
+  }, [messages]);
+  
+
   const handleSendMessage = async () => {
-   if (input.trim() === '') return; // Prevent sending empty messages
+    if (input.trim() === '') return;
 
-   // Add user's message to messages array
-   setMessages((prevMessages) => [...prevMessages, { sender: 'User', content: input }]);
+    // Add user's message and a placeholder for the bot's response
+    setMessages(prevMessages => [
+      ...prevMessages,
+      { sender: 'User', content: input },
+      { sender: 'Placeholder', content: '...' }
+    ]);
 
-   // short timeout before placeholder shows
-   setTimeout(() => {
-    // Add placeholder message to messages array
-    setMessages((prevMessages) => [...prevMessages, { sender: 'Placeholder', content: '...' }]);
-    }, 1000);
+    // Clear the input field immediately
+    setInput('');
 
-
-
-    
-      // Code to send the message to the server and handle response remains unchanged
+    // Replace the placeholder when the response is received
     try {
-      // Get the userId and jwtToken from AsyncStorage
-      let userId;
-      let jwtToken;
+      let userId, jwtToken;
       if (Platform.OS === 'web') {
-
         userId = window.localStorage.getItem('userId');
         jwtToken = window.localStorage.getItem('jwtToken');
       } else {
@@ -52,24 +57,17 @@ export default function ChatScreen() {
         jwtToken = await AsyncStorage.getItem('jwtToken');
       }
 
-          // Send the message to the server
-          const response = await api.post('/chat', {userId: userId, message: input });
-          
-          // Add the assistant's response to the messages array
-          setMessages((prevMessages) => prevMessages.map((message, index) => {
-            if (message.sender === 'Placeholder') {
-              return { ...message, sender: 'Buhdi', content: response.data.response };
-            }
-            setTimeout(() => flatListRef.current?.scrollToEnd({ animated: true }), 500);
-            return message;
-            }));
-        } catch (error) {
-        
-          console.error('Error sending message to back:', error);
-    } finally {
-          // Set pendingResponse to false to hide the placeholder card
+      const response = await api.post('/chat', { userId, message: input });
 
-      setInput(''); // Clear input field
+      setMessages(prevMessages => prevMessages.map(message =>
+        message.sender === 'Placeholder'
+          ? { sender: 'Buhdi', content: response.data.response }
+          : message
+      ));
+
+
+    } catch (error) {
+      console.error('Error sending message to backend:', error);
     }
   };
 
@@ -77,7 +75,7 @@ export default function ChatScreen() {
     <KeyboardAvoidingView 
     style={{ flex: 1 }}
     behavior={Platform.OS === "ios" ? "padding" : "height"}
-    keyboardVerticalOffset={Platform.OS === "ios" ? 10 : 50}
+    keyboardVerticalOffset={Platform.OS === "ios" ? 30 : 80}
     >
       <SafeAreaView style={styles.container}>
         <Card>
@@ -85,10 +83,10 @@ export default function ChatScreen() {
         </Card>
         <FlatList
           data={messages}
-          contentContainerStyle={{ paddingBottom: 20}}
+         
           keyExtractor={(item, index) => index.toString()}
           ref={flatListRef}
-          style={{height: height * 0.75 }}
+          style={{height: height * 0.75, paddingBottom: 80 }}
           onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
           renderItem={({ item }) => {
             if (item.sender === 'Placeholder') {
@@ -138,6 +136,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     position: 'absolute',
+    width: width,
     left: 0,
     right: 0,
     bottom: 0,
@@ -147,6 +146,8 @@ const styles = StyleSheet.create({
     // Ensure there's enough space for the text input and button
   },
   input: {
+    height: height * 0.15,
+    maxHeight: 40,
     flex: 1,
     fontSize: 16,
     borderWidth: 1,

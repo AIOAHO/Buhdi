@@ -5,6 +5,7 @@ import { sendMessage } from '../controllers/chatController';
 import { authenticateToken } from '../middleware/authMiddleware';
 import { googleLogin } from '../controllers/authController';
 import { addToWaitingList } from '../controllers/waitinglistController';
+import { submitFeedback } from '../controllers/feedbackController';
 
 const router = express.Router();
 
@@ -15,6 +16,7 @@ router.post('/googlelogin', googleLogin);
 router.post('/save-enneagram-results', authenticateToken, saveEnneagramResults);
 router.post('/get-enneagram-analysis', authenticateToken, getEnneagramAnalysis);
 router.post('/chat', authenticateToken, sendMessage);
+router.post('/feedback', authenticateToken, submitFeedback);
 
 
 
