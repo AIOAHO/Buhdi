@@ -84,9 +84,10 @@ export default function WaitingListScreen ({ navigation }) {
           <Button
             onPress={handleJoinWaitingList}
             style={styles.button}
+            textColor='#F7E8D8'
             disabled={isSubmitting} // Disable the button while submitting
           >
-            {isSubmitting ? 'Signing Up...' : 'Sign Up'}
+            {isSubmitting ? 'Joooining!' : 'Join our Waiting List'}
           </Button>
 
         <Button
@@ -175,7 +176,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   button: {
-    textColor='#F7E8D8'
     marginTop: 10,
     width: width * 0.8, // Ensure buttons take the 80% width of the container
     maxWidth: 350, // Limit the maximum width of buttons
