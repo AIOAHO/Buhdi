@@ -12,28 +12,33 @@ export default function WaitingListScreen ({ navigation }) {
   const [email, setEmail] = useState('');
   const [errorMessage, setErrorMessage] = useState(''); // New state variable for error messages
   const [successMessage, setSuccessMessage] = useState(''); // New state variable for success messages
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleEmailChange = (email) => setEmail(email);
 
   const handleJoinWaitingList = async () => {
-    
-    // Check if the email is empty
     if (!email.trim()) {
-      setSuccessMessage(''); // Clear any previous success messages
-      setErrorMessage("Woops! You forgot to provide your email."); // Set message for empty email
-      return; // Exit the function early
+      setSuccessMessage('');
+      setErrorMessage("Woops! You forgot to provide your email.");
+      return;
     }
+  
+    // Prevent further submissions if already submitting
+    if (isSubmitting) return;
+  
+    setIsSubmitting(true); // Disable the button
+    setErrorMessage(''); // Clear any existing error messages
+    setSuccessMessage(''); // Clear any existing success messages
   
     try {
       const response = await api.post('/waiting-list', { email });
-      
-      setErrorMessage(''); // Clear any previous error messages
-      setSuccessMessage(response.data.message); // Set the success message from the backend response
+      setSuccessMessage(response.data.message);
     } catch (error) {
       console.error('Error adding to waiting list:', error);
       const errorMessage = error.response?.data?.message || 'An unexpected error occurred. Please try again.';
-      setSuccessMessage(''); // Clear any previous success messages
-      setErrorMessage(errorMessage); // Set the error message from the backend response or a default message
+      setErrorMessage(errorMessage);
+    } finally {
+      setIsSubmitting(false); // Re-enable the button
     }
   };
   
@@ -70,13 +75,13 @@ export default function WaitingListScreen ({ navigation }) {
             {successMessage}
           </HelperText>
         
-        <Button
-          
-          onPress={handleJoinWaitingList}
-          style={styles.button}
-        >
-          Sign Up
-        </Button>
+          <Button
+            onPress={handleJoinWaitingList}
+            style={styles.button}
+            disabled={isSubmitting} // Disable the button while submitting
+          >
+            {isSubmitting ? 'Signing Up...' : 'Sign Up'}
+          </Button>
 
         <Button
           mode="outlined"
