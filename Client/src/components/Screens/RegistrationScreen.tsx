@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, Dimensions } from 'react-native';
 import { TextInput, Button, Headline, HelperText } from 'react-native-paper';
 import { register, login, validateEmail, validatePassword } from '../../utils/auth'; // Make sure these are exported
+import { useFonts, Inter_400Regular } from '@expo-google-fonts/inter';
 
+const width = Dimensions.get('window').width;
 
 export default function RegistrationScreen({ navigation }) {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [error, setError] = useState<string>('');
+  let [expoFonts] : [boolean, Error | null] = useFonts({
+    Inter_400Regular,
+  });
 
   const handleRegistration = async () => {
     // Clear any previous errors
@@ -51,7 +56,7 @@ export default function RegistrationScreen({ navigation }) {
     <View style={styles.container}>
       <View style={styles.linearTop}/>
       <View style={styles.formContainer}>
-        <Headline style={styles.headline}>Registration</Headline>
+        <Headline style={styles.headline}>Sign up for Budhi</Headline>
         <TextInput
           label="Email"
           value={email}
@@ -59,6 +64,12 @@ export default function RegistrationScreen({ navigation }) {
           mode="outlined"
           autoCapitalize="none"
           keyboardType="email-address"
+          theme={{ colors: { onSurfaceVariant: '#2E536F'} }} // This targets the placeholder text color
+          textColor='#2E536F' // Targets text
+          selectionColor='#2E536F' // Targets text when selected
+          outlineColor='rgba(46, 83, 111, 0.7)' // Targets outline unselected
+          activeOutlineColor='#2E536F' // Targets outline when selected
+          outlineStyle={{ backgroundColor: 'rgba(191, 191, 191, 0.25)', borderRadius: 6 }} // Background color
           style={styles.input}
         />
         <TextInput
@@ -67,10 +78,16 @@ export default function RegistrationScreen({ navigation }) {
           value={password}
           onChangeText={setPassword}
           mode="outlined"
+          theme={{ colors: { onSurfaceVariant: '#2E536F'} }} // This targets the placeholder text color
+          textColor='#2E536F' // Targets text
+          selectionColor='#2E536F' // Targets text when selected
+          outlineColor='rgba(46, 83, 111, 0.7)' // Targets outline unselected
+          activeOutlineColor='#2E536F' // Targets outline when selected
+          outlineStyle={{ backgroundColor: 'rgba(191, 191, 191, 0.25)', borderRadius: 6 }} // Background color
           style={styles.input}
         />
         {error ? <HelperText type="error" visible={true}>{error}</HelperText> : null}
-        <Button mode="contained" onPress={handleRegistration} style={styles.button}>
+        <Button textColor='#F7E8D8' mode="contained" onPress={handleRegistration} style={styles.button}>
           Register
         </Button>
 
@@ -96,37 +113,40 @@ const styles = StyleSheet.create({
     width: '120%',
     borderTopWidth: 7,
     borderRadius: 50,
-    borderColor: '#DBCBD8',
+    borderColor: '#2E536F',
     position: 'absolute',
     top: 0,
   },
   formContainer: {
-    width: '100%',
-    maxWidth: 400, // Set a maximum width for the container
+    width: width * 0.8, // Ensure buttons take the 80% width of the container
+    maxWidth: 350, // Limit the maximum width of buttons
   },
   headline: {
     textAlign: 'center',
     marginBottom: 20,
-    color: '#E4FDE1',
+    fontFamily: 'Inter_400Regular',
+    color: '#2E536F',
   },
   input: {
+    height: 40,
     marginBottom: 10,
-    width: '100%', // Ensure inputs take the full width of the container
   },
   button: {
     marginTop: 10,
     marginBottom: 10,
-    width: '100%', // Ensure buttons take the full width of the container
-    maxWidth: 400, // Limit the maximum width of buttons
+    backgroundColor: '#2E536F',
+    width: width * 0.8, // Ensure buttons take the 80% width of the container
+    maxWidth: 350, // Limit the maximum width of buttons
   },
   backToLoginText: {
     marginTop: 10,
     textAlign: 'center',
+    color: '#2E536F',
   },
   backToLoginLink: {
     marginTop: 10,
     textAlign: 'center',
-    color: '#6200ee',
+    color: '#2E536F',
     fontWeight: 'bold',
   },
 });

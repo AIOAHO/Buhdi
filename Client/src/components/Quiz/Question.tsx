@@ -21,8 +21,8 @@ const Question = ({ question, onAnswer, selectedScore }) => {
                 <View key={label} style={styles.option}>
                   <RadioButton.Android
                     value={label}
-                    color={'#6200ee'} // Purple color for radio button
-                    uncheckedColor={'#6210ee'} 
+                    color={'#F7E8D8'} // Purple color for radio button
+                    uncheckedColor={'#F7E8D8'} 
                   />
                 </View>
               ))}
@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
     height: 150,
     justifyContent: 'center',
     marginBottom: 20,
+    backgroundColor: '#2E536F', // background of question
   },
   cardContent: {
     alignItems: 'center', // Centering text in the card
@@ -55,6 +56,7 @@ const styles = StyleSheet.create({
   questionText: {
     fontSize: 16,
     textAlign: 'center', // Center align the question text
+    color: '#F7E8D8',
   },
   option: {
     alignItems: 'center',
@@ -72,6 +74,7 @@ const styles = StyleSheet.create({
   labelText: {
     fontSize: 14, // Adjust the font size as needed
     marginRight: 15, // Add space to the right of each label
+    color: '#2E536F', // color of Inaccurate etc labels
   },
 });
 

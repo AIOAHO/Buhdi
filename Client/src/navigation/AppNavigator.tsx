@@ -32,14 +32,14 @@ export default function AppNavigator() {
     headerShown: true,
     headerShadowVisible: false,
     headerTitleAlign: 'center',
-    headerTintColor: '#E4FDE1',
-    headerBackground: () => <View style={{flex: 1, backgroundColor: '#59656F'}}/>,
+    headerTintColor: '#2E536F',
+    headerBackground: () => <View style={{flex: 1, backgroundColor: '#F1C1BF'}}/>,
     headerBackTitleVisible: false,
     headerTitleStyle: {
-      color: '#E4FDE1',
+      color: '#2E536F',
     },
     cardStyle: {
-      backgroundColor: '#59656F'
+      backgroundColor: '#F1C1BF'
     },
   };
 

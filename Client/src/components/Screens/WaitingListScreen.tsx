@@ -52,17 +52,22 @@ export default function WaitingListScreen ({ navigation }) {
       <View style={styles.formContainer}>
         <Title style={styles.title}>Join Our Waiting List</Title>
         <Text style={styles.subtitle}>
-          Get early access and exclusive updates by signing up!
+          Get early access and exclusive updates by joining!
         </Text>
         <TextInput
           label="Email"
           value={email}
           onChangeText={handleEmailChange}
           mode="outlined"
-          style={styles.input}
           keyboardType="email-address"
           autoCapitalize="none"
-          theme={{ colors: { primary: colors.primary } }}
+          theme={{ colors: { primary: colors.primary, onSurfaceVariant: '#2E536F' /*This targets the placeholder text color*/ } }}
+          textColor='#2E536F' // Targets text
+          selectionColor='#2E536F' // Targets text when selected
+          outlineColor='rgba(46, 83, 111, 0.7)' // Targets outline unselected
+          activeOutlineColor='#2E536F' // Targets outline when selected
+          outlineStyle={{ backgroundColor: 'rgba(191, 191, 191, 0.25)', borderRadius: 6 }} // Background color
+          style={styles.input}
         />
 
           {/* Display error message if exists */}
@@ -75,6 +80,7 @@ export default function WaitingListScreen ({ navigation }) {
             {successMessage}
           </HelperText>
         
+
           <Button
             onPress={handleJoinWaitingList}
             style={styles.button}
@@ -85,6 +91,7 @@ export default function WaitingListScreen ({ navigation }) {
 
         <Button
           mode="outlined"
+          textColor='#F7E8D8'
           onPress={() => navigation.navigate('Login')} // Navigate to Login screen
           style={styles.button}
         >
@@ -102,14 +109,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%', 
   },
-  linearTop: {
-    width: '120%',
-    borderTopWidth: 7,
-    borderRadius: 50,
-    borderColor: '#DBCBD8',
-    position: 'absolute',
-    top: 0,
-  },
   circleRight1: {
     width: width * 0.45,
     height: height * 0.4,
@@ -117,7 +116,7 @@ const styles = StyleSheet.create({
     maxHeight: 500,
     borderWidth: 7,
     borderRadius: 50,
-    borderColor: '#E4FDE1',
+    borderColor: '#fff0db',
     position: 'absolute',
     right: -100,
     top: -100,
@@ -129,7 +128,7 @@ const styles = StyleSheet.create({
     maxHeight: 800,
     borderWidth: 7,
     borderRadius: 50,
-    borderColor: '#E85F5C',
+    borderColor: '#2E536F',
     position: 'absolute',
     right: -100,
     top: -100,
@@ -141,10 +140,18 @@ const styles = StyleSheet.create({
     maxHeight: 500,
     borderWidth: 7,
     borderRadius: 50,
-    borderColor: '#7EBDC2',
+    borderColor: '#fff0db',
     position: 'absolute',
     left: -50,
     bottom: -50,
+  },
+  linearTop: {
+    width: '120%',
+    borderTopWidth: 7,
+    borderRadius: 50,
+    borderColor: '#2E536F',
+    position: 'absolute',
+    top: 0,
   },
   formContainer: {
     width: width * 0.8, // Ensure buttons take the 80% width of the container
@@ -155,20 +162,23 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 10,
     textAlign: 'center',
+    color: '#2E536F',
   },
   subtitle: {
     fontSize: 16,
     marginBottom: 20,
     textAlign: 'center',
+    color: '#2E536F',
   },
   input: {
-    marginBottom: 20,
+    height: 40,
+    marginBottom: 10,
   },
   button: {
+    textColor='#F7E8D8'
     marginTop: 10,
     width: width * 0.8, // Ensure buttons take the 80% width of the container
     maxWidth: 350, // Limit the maximum width of buttons
-    backgroundColor: '#E4FDE1',
-    color: '#59656F',
+    backgroundColor: '#2E536F',
   },
 });
