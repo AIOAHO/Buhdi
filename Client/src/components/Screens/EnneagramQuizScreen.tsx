@@ -7,11 +7,14 @@ import { quizQuestions, enneagramTypeMapping } from '../Quiz/EnneagramQuestions'
 import { useNavigation } from '@react-navigation/native';
 import styles from '../Quiz/EnneagramQuizStyle';
 
+
 export default function EnneagramQuiz() {
   const navigation = useNavigation();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [shuffledQuestions, setShuffledQuestions] = useState([]);
   const [answers, setAnswers] = useState([]);
+  const motivationalText1 = "Buhdi is listening! You're doing great.";
+  const motivationalText2 = "Almost there!";
 
   useEffect(() => {
     // Updated: Selects 3 random questions for each Enneagram type
@@ -102,25 +105,36 @@ export default function EnneagramQuiz() {
       <View style={styles.formContainer}>
         {shuffledQuestions.length > 0 && (
           <>
+
+          {/* Placeholder View for Motivational Text */}
+          <View style={styles.motivationalTextPlaceholder}>
+            {currentQuestionIndex === Math.floor(shuffledQuestions.length / 3) && (
+              <Text style={styles.motivationalText}>{motivationalText1}</Text>
+            )}
+            {currentQuestionIndex === Math.floor(2 * shuffledQuestions.length / 3) && (
+              <Text style={styles.motivationalText}>{motivationalText2}</Text>
+            )}
+          </View>
+
             <Question
               question={shuffledQuestions[currentQuestionIndex]}
               onAnswer={handleAnswer}
               selectedScore={answers[currentQuestionIndex]}
-              style={styles.question}
+
             />
             <Text style={styles.questionIndicator}>
               {currentQuestionIndex + 1}/{shuffledQuestions.length}
             </Text>
             <View style={styles.navigationContainer}>
               {/* Wrap the Previous button in a View for left alignment */}
-              <View style={{ flex: 1, alignItems: 'flex-start' }}>
+              <View style={{ flex: 1, alignItems: 'flex-start', marginLeft: 40, }}>
                 {currentQuestionIndex > 0 && (
                   <Button style={{ backgroundColor: '#2E536F'}} textColor='#F7E8D8' mode="contained" onPress={goToPreviousQuestion}>Previous</Button>
                 )}
               </View>
               
               {/* Wrap the Next and Submit buttons in a View for right alignment */}
-              <View style={{ flex: 1, alignItems: 'flex-end', flexDirection: 'row', justifyContent: 'flex-end' }}>
+              <View style={{ flex: 1, alignItems: 'flex-end', flexDirection: 'row', justifyContent: 'flex-end', marginRight: 40, }}>
                 {currentQuestionIndex < shuffledQuestions.length - 1 && (
                   <Button style={{ backgroundColor: '#2E536F'}} textColor='#F7E8D8' mode="contained" onPress={goToNextQuestion}>Next</Button>
                 )}

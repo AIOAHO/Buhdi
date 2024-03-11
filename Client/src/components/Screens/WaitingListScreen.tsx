@@ -1,14 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { View, Dimensions,  StyleSheet } from 'react-native';
 import { TextInput, Button, Text, Title, useTheme, HelperText } from 'react-native-paper';
+import {
+  useFonts,
+  BigShouldersStencilDisplay_400Regular,
+} from '@expo-google-fonts/big-shoulders-stencil-display';
 import api from '../../utils/api';
+import { Inter_400Regular } from '@expo-google-fonts/inter';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 export default function WaitingListScreen ({ navigation }) {
+  let [expoFonts] : [boolean, Error | null] = useFonts({
+    BigShouldersStencilDisplay_400Regular,
+    Inter_400Regular,
+  });
 
-  const { colors } = useTheme();
+
   const [email, setEmail] = useState('');
   const [errorMessage, setErrorMessage] = useState(''); // New state variable for error messages
   const [successMessage, setSuccessMessage] = useState(''); // New state variable for success messages
@@ -44,62 +53,62 @@ export default function WaitingListScreen ({ navigation }) {
   
 
   return (
-    <View style={styles.container}>
-      <View style={styles.linearTop}/>
-      <View style={styles.circleRight1}/>
-      <View style={styles.circleRight2}/>
-      <View style={styles.circleLeft}/>
-      <View style={styles.formContainer}>
-        <Title style={styles.title}>Join Our Waiting List</Title>
-        <Text style={styles.subtitle}>
-          Get early access and exclusive updates by joining!
-        </Text>
-        <TextInput
-          label="Email"
-          value={email}
-          onChangeText={handleEmailChange}
-          mode="outlined"
-          keyboardType="email-address"
-          autoCapitalize="none"
-          theme={{ colors: { primary: colors.primary, onSurfaceVariant: '#2E536F' /*This targets the placeholder text color*/ } }}
-          textColor='#2E536F' // Targets text
-          selectionColor='#2E536F' // Targets text when selected
-          outlineColor='rgba(46, 83, 111, 0.7)' // Targets outline unselected
-          activeOutlineColor='#2E536F' // Targets outline when selected
-          outlineStyle={{ backgroundColor: 'rgba(191, 191, 191, 0.25)', borderRadius: 6 }} // Background color
-          style={styles.input}
-        />
+      <View style={styles.container}>
+        <View style={styles.linearTop}/>
+        <View style={styles.circleRight1}/>
+        <View style={styles.circleRight2}/>
+        <View style={styles.circleLeft}/>
+        <View style={styles.formContainer}>
+          <Text style={styles.title}>Budhi</Text>
+          
+          
+          <Text style={styles.subtitle}>
+          Buhdi is your personal AI buddy.
+          </Text>
+          <Text style={styles.subtitle}>
+          There for you when you feel stuck, confused or anxious.
+          </Text>
+          <Title style={styles.title2}>Join Our Waiting List</Title>
+          <TextInput
+            label="Email"
+            value={email}
+            onChangeText={handleEmailChange}
+            mode="outlined"
+            keyboardType="email-address"
+            autoCapitalize="none"
+            style={styles.input}
+          />
 
-          {/* Display error message if exists */}
-          <HelperText type="error" visible={!!errorMessage}>
-          {errorMessage}
-          </HelperText>
+            {/* Display error message if exists */}
+            <HelperText type="error" visible={!!errorMessage}>
+            {errorMessage}
+            </HelperText>
 
-          {/* Display success message if exists */}
-          <HelperText type="info" visible={!!successMessage}>
-            {successMessage}
-          </HelperText>
-        
+            {/* Display success message if exists */}
+            <HelperText type="info" visible={!!successMessage}>
+              {successMessage}
+            </HelperText>
+          
+
+            <Button
+              onPress={handleJoinWaitingList}
+              style={styles.button}
+              textColor='#F7E8D8'
+              disabled={isSubmitting} // Disable the button while submitting
+            >
+              {isSubmitting ? 'Joooining!' : 'Join our Waiting List'}
+            </Button>
 
           <Button
-            onPress={handleJoinWaitingList}
-            style={styles.button}
+            mode="outlined"
             textColor='#F7E8D8'
-            disabled={isSubmitting} // Disable the button while submitting
+            onPress={() => navigation.navigate('Login')} // Navigate to Login screen
+            style={styles.button}
           >
-            {isSubmitting ? 'Joooining!' : 'Join our Waiting List'}
+            Already have an account? Log in
           </Button>
-
-        <Button
-          mode="outlined"
-          textColor='#F7E8D8'
-          onPress={() => navigation.navigate('Login')} // Navigate to Login screen
-          style={styles.button}
-        >
-          Already have an account? Log in
-        </Button>
+        </View>
       </View>
-    </View>
   );
 };
 
@@ -109,6 +118,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%', 
+    height: height,
   },
   circleRight1: {
     width: width * 0.45,
@@ -159,6 +169,12 @@ const styles = StyleSheet.create({
     maxWidth: 350, // Limit the maximum width of buttons
   },
   title: {
+    fontSize: 130,
+    fontFamily: 'BigShouldersStencilDisplay_400Regular',
+    color: '#F7E8D8',
+    marginBottom: 60, // Adjust this value to move the title up or down
+ },
+  title2: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 10,

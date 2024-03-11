@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Alert, TouchableOpacity } from 'react-native';
-import { TextInput, Button, Text, Menu, Provider } from 'react-native-paper';
+import { View, Dimensions, StyleSheet, Alert, TouchableOpacity } from 'react-native';
+import { TextInput, Button, Text, Chip, Provider } from 'react-native-paper';
 import api from '../../utils/api'; // Import the API utility for making HTTP requests
+
+const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
 
 // FeedbackScreen component definition
 export default function FeedbackScreen({navigation}) {
@@ -10,6 +13,17 @@ export default function FeedbackScreen({navigation}) {
   const [feedback, setFeedback] = useState(''); // Tracks the user's feedback text
   const [menuVisible, setMenuVisible] = useState(false); // Controls the visibility of the feature selection menu
   const [submissionSuccess, setSubmissionSuccess] = useState(false);
+
+  const theme = {
+    roundness: 2,
+    colors: {
+      primary: '#2E536F', // Blue color for primary elements
+      accent: '#F1C1BF', // Pink color for accents
+      background: '#F7E8D8', // Cream color for backgrounds
+      text: '#2E536F', // Blue color for text
+      // Add other color specifications if needed
+    },
+  };
 
   // List of features that users can select for their feedback
   const features = [
@@ -46,33 +60,23 @@ export default function FeedbackScreen({navigation}) {
   };
   
   return (
-    <Provider>
-      <View style={styles.container}>
-        <Text style={styles.header}>Feedback</Text>
 
-        {/* Feature selection menu */}
-        <Menu
-          visible={menuVisible} // Controls the visibility of the menu based on the state
-          onDismiss={() => setMenuVisible(false)} // Function to hide the menu
-          anchor={(
-            <TouchableOpacity onPress={() => setMenuVisible(true)}>
-              <Text style={styles.menuAnchorText}>
-                Feature: {features.find(f => f.value === selectedFeature)?.label}
-              </Text>
-            </TouchableOpacity>
-          )}>
-          {/* Mapping over the features to create menu items */}
-          {features.map((feature) => (
-            <Menu.Item
-              key={feature.value}
-              onPress={() => {
-                setSelectedFeature(feature.value);
-                setMenuVisible(false); // Hide the menu after selection
-              }}
-              title={feature.label}
-            />
-          ))}
-        </Menu>
+      <View style={styles.container}>
+        <Text style={styles.header}>Bhudi loves feedback! Whishes, bugs & praise, all are welcome :D</Text>
+
+               {/* Feature selection using chips */}
+            <View style={styles.chipGroup}>
+            {features.map((feature) => (
+                <Chip
+                key={feature.value}
+                selected={selectedFeature === feature.value}
+                onPress={() => setSelectedFeature(feature.value)}
+                style={styles.chip}
+                >
+                {feature.label}
+                </Chip>
+            ))}
+            </View>
 
         {/* Feedback text input */}
         <TextInput
@@ -86,14 +90,14 @@ export default function FeedbackScreen({navigation}) {
         />
 
         {/* Submit button */}
-        <Button mode="contained" onPress={submitFeedback} style={styles.button}>
+        <Button mode="contained" onPress={submitFeedback} style={styles.button} textColor='#F7E8D8'>
           Submit Feedback
         </Button>
         {/* Display success message if submissionSuccess is true */}
         {submissionSuccess && (
-        <Text style={styles.successMessage}>Thank you! Bhudi loves feedback! Whishes, bugs & praise, all are welcome :D</Text>)}
+        <Text style={styles.successMessage}>Thank you! Always welcome to come back here to share more.</Text>)}
       </View>
-    </Provider>
+   
   );
 };
 
@@ -101,30 +105,45 @@ export default function FeedbackScreen({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
   },
   header: {
-    fontSize: 20,
+    fontSize: 24,
+    fontWeight: 'bold',
     marginBottom: 20,
+    textAlign: 'center',
+    color: '#2E536F',
   },
   input: {
     marginBottom: 20,
-    height: 100, // Adjust as needed for the multiline text input
-    textAlignVertical: 'top', // Aligns text to the top in multiline mode
+    width: width * 0.8,
+    height: height * 0.4, // Adjust as needed for the multiline text input
+    verticalAlign: 'top', // Aligns text to the top in multiline mode
   },
   button: {
     marginTop: 10,
-  },
-  menuAnchorText: {
-    padding: 10,
-    fontSize: 16,
-    color: 'black', // Adjust based on your theme
-    backgroundColor: '#e0e0e0', // Adjust based on your theme
-    marginTop: 10,
+    width: width * 0.8, // Ensure buttons take the 80% width of the container
+    maxWidth: 350, // Limit the maximum width of buttons
+    backgroundColor: '#2E536F',
     marginBottom: 20,
   },
+  chipGroup: {
+    flexDirection: 'row', // Align items horizontally
+    flexWrap: 'wrap', // Allow items to wrap to the next line if needed
+    justifyContent: 'space-between', // Space out the items evenly
+    margin: 20, // Add some space below the chip group
+ },
+ chip: {
+    marginBottom: 10, // Add some space between chips
+    marginRight: 10, // Add some space between chips horizontally
+ },
+ chipText: {
+    fontSize: 18, // Adjust the font size as needed
+ },
   successMessage: {
-    color: 'white',
+    color: '#F7E8D8',
     fontSize: 16,
     textAlign: 'center',
     margin: 20,

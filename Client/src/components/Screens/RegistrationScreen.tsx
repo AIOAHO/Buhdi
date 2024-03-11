@@ -5,6 +5,7 @@ import { register, login, validateEmail, validatePassword } from '../../utils/au
 import { useFonts, Inter_400Regular } from '@expo-google-fonts/inter';
 
 const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
 
 export default function RegistrationScreen({ navigation }) {
   const [email, setEmail] = useState<string>('');
@@ -55,6 +56,9 @@ export default function RegistrationScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.linearTop}/>
+      <View style={styles.circleRight1}/>
+      <View style={styles.circleRight2}/>
+      <View style={styles.circleLeft}/>
       <View style={styles.formContainer}>
         <Headline style={styles.headline}>Sign up for Budhi</Headline>
         <TextInput
@@ -64,12 +68,7 @@ export default function RegistrationScreen({ navigation }) {
           mode="outlined"
           autoCapitalize="none"
           keyboardType="email-address"
-          theme={{ colors: { onSurfaceVariant: '#2E536F'} }} // This targets the placeholder text color
-          textColor='#2E536F' // Targets text
-          selectionColor='#2E536F' // Targets text when selected
-          outlineColor='rgba(46, 83, 111, 0.7)' // Targets outline unselected
-          activeOutlineColor='#2E536F' // Targets outline when selected
-          outlineStyle={{ backgroundColor: 'rgba(191, 191, 191, 0.25)', borderRadius: 6 }} // Background color
+ 
           style={styles.input}
         />
         <TextInput
@@ -78,12 +77,7 @@ export default function RegistrationScreen({ navigation }) {
           value={password}
           onChangeText={setPassword}
           mode="outlined"
-          theme={{ colors: { onSurfaceVariant: '#2E536F'} }} // This targets the placeholder text color
-          textColor='#2E536F' // Targets text
-          selectionColor='#2E536F' // Targets text when selected
-          outlineColor='rgba(46, 83, 111, 0.7)' // Targets outline unselected
-          activeOutlineColor='#2E536F' // Targets outline when selected
-          outlineStyle={{ backgroundColor: 'rgba(191, 191, 191, 0.25)', borderRadius: 6 }} // Background color
+ 
           style={styles.input}
         />
         {error ? <HelperText type="error" visible={true}>{error}</HelperText> : null}
@@ -108,6 +102,43 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
+    backgroundColor: '#F1C1BF',
+  },
+  circleRight1: {
+    width: width * 0.45,
+    height: height * 0.4,
+    maxWidth: 500,
+    maxHeight: 500,
+    borderWidth: 7,
+    borderRadius: 50,
+    borderColor: '#fff0db',
+    position: 'absolute',
+    right: -100,
+    top: -100,
+  },
+  circleRight2: {
+    width: width * 0.32,
+    height: height * 0.7,
+    maxWidth: 400,
+    maxHeight: 800,
+    borderWidth: 7,
+    borderRadius: 50,
+    borderColor: '#2E536F',
+    position: 'absolute',
+    right: -100,
+    top: -100,
+  },
+  circleLeft: {
+    width: width * 0.9,
+    height: height * 0.3,
+    maxWidth: 500,
+    maxHeight: 500,
+    borderWidth: 7,
+    borderRadius: 50,
+    borderColor: '#fff0db',
+    position: 'absolute',
+    left: -50,
+    bottom: -50,
   },
   linearTop: {
     width: '120%',

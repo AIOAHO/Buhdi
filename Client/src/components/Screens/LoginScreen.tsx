@@ -131,7 +131,7 @@ export default function LoginScreen({ navigation }) {
       <View style={styles.circleRight2}/>
       <View style={styles.circleLeft}/>
       <View style={styles.formContainer}>
-        <Headline style={styles.headline}>Log into Budhi</Headline>
+        <Headline style={styles.title}>Log into Budhi</Headline>
         <TextInput
           label="Email"
           value={email}
@@ -139,12 +139,7 @@ export default function LoginScreen({ navigation }) {
           mode="outlined"
           autoCapitalize="none"
           keyboardType="email-address"
-          theme={{ colors: { onSurfaceVariant: '#2E536F'} }} // This targets the placeholder text color
-          textColor='#2E536F' // Targets text
-          selectionColor='#2E536F' // Targets text when selected
-          outlineColor='rgba(46, 83, 111, 0.7)' // Targets outline unselected
-          activeOutlineColor='#2E536F' // Targets outline when selected
-          outlineStyle={{ backgroundColor: 'rgba(191, 191, 191, 0.25)', borderRadius: 6 }} // Background color
+ 
           style={styles.input}
         />
         <TextInput
@@ -153,17 +148,12 @@ export default function LoginScreen({ navigation }) {
           value={password}
           onChangeText={setPassword}
           mode="outlined"
-          theme={{ colors: { onSurfaceVariant: '#2E536F'} }} // This targets the placeholder text color
-          textColor='#2E536F' // Targets text
-          selectionColor='#2E536F' // Targets text when selected
-          outlineColor='rgba(46, 83, 111, 0.7)' // Targets outline unselected
-          activeOutlineColor='#2E536F' // Targets outline when selected
-          outlineStyle={{ backgroundColor: 'rgba(191, 191, 191, 0.25)', borderRadius: 6 }} // Background color
+ 
           style={styles.input}
         />
         <HelperText style={{ color: '#E85F5C', height: 25}}type="error">{error}</HelperText>
         
-        <Button onPress={handleLogin} style={styles.button}>
+        <Button onPress={handleLogin} style={styles.button} textColor='#F7E8D8'>
           Login
         </Button>
 
@@ -171,7 +161,7 @@ export default function LoginScreen({ navigation }) {
 
 
         <Text style={styles.registerText}>
-          Don't have an account?{' '}
+          New to Buhdi?{' '}
           <Text style={styles.registerLink} onPress={() => navigation.navigate('Registration')}>
             Register here
           </Text>
@@ -236,10 +226,11 @@ const styles = StyleSheet.create({
     width: width * 0.8, // Ensure buttons take the 80% width of the container
     maxWidth: 350, // Limit the maximum width of buttons
   },
-  headline: {
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 10,
     textAlign: 'center',
-    marginBottom: 20,
-    fontFamily: 'Inter_400Regular',
     color: '#2E536F',
   },
   input: {

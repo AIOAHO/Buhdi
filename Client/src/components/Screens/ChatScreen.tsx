@@ -82,34 +82,25 @@ export default function ChatScreen() {
           <Card.Title title="Buhdi" subtitle="Always here for you." left={props => <Avatar.Icon {...props} icon="robot" />} />
         </Card>
         <FlatList
-          data={messages}
-         
-          keyExtractor={(item, index) => index.toString()}
-          ref={flatListRef}
-          style={{height: height * 0.75, paddingBottom: 80 }}
-          onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
-          renderItem={({ item }) => {
-            if (item.sender === 'Placeholder') {
-              return (
-                <Card style={styles.placeholderCard}>
-                  <Card.Title title="Buhdi" />
-                  <Card.Content>
-                    <Paragraph>...</Paragraph>
-                  </Card.Content>
-                </Card>
-              );
-            }
+        data={messages}
+        keyExtractor={(item, index) => index.toString()}
+        ref={flatListRef}
+        style={{height: height * 0.75, paddingBottom: 80 }}
+        onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
+        renderItem={({ item }) => {
+            const cardStyle = item.sender === 'User' ? styles.userCard : styles.botCard;
             return (
-              <Card style={styles.card}>
+              <Card style={cardStyle}>
                 <Card.Title title={item.sender} />
                 <Card.Content>
                   <Paragraph>{item.content}</Paragraph>
                 </Card.Content>
               </Card>
             );
-          }}
-
+        }}
         />
+
+        
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
@@ -142,7 +133,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     flexDirection: 'row',
     padding: 10,
-    backgroundColor: '#F1C1BF', // Same as main background colour
+
     // Ensure there's enough space for the text input and button
   },
   input: {
@@ -155,18 +146,21 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 5,
     marginRight: 10,
-    backgroundColor: '#F1C1BF',
-    color: '#2E536F',
-    borderColor: 'rgba(46, 83, 111, 0.7)',
   },
-  card: {
-    margin: 10,
-    padding: 10,
-    // backgroundColor: '#F7E8D8', // USER message background
-  },
-  placeholderCard: {
-    margin: 10,
-    padding: 10,
-    // backgroundColor: '#2E536F', // BUDHI message background
-  },
+  userCard: {
+      margin: 10,
+      padding: 10,
+      backgroundColor: '#F7E8D8', // This is the color for the user's messages
+   },
+   botCard: {
+      margin: 10,
+      padding: 10,
+// color for bot and placeholder be the same
+   },
+   // Adjust the placeholderCard style if needed
+   placeholderCard: {
+      margin: 10,
+      padding: 10,
+
+   },
 });

@@ -17,10 +17,10 @@ const Stack = createStackNavigator();
 const linking = {
  prefixes: [window.location.origin],
  config: {
-    initialRouteName: 'WaitingList' as 'WaitingList' | 'Login',
     screens: {
       WaitingList: '/',
       Login: 'login',
+      Registration: '/registration'
       // Add other routes here as needed
     },
  },
@@ -45,7 +45,7 @@ export default function AppNavigator() {
 
   return (
     <NavigationContainer linking={linking}>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName='EnneagramQuiz'>
         <Stack.Screen name="WaitingList" component={WaitingListScreen} options={screenOptions}/>
         <Stack.Screen name="Login" component={LoginScreen} options={screenOptions}/>
         <Stack.Screen name="Registration" component={RegistrationScreen} options={screenOptions}/>
