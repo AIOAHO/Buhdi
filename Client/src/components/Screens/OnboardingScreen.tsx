@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     backgroundColor: '#F1C1BF',
+    overflow: 'hidden',
   },
   title: {
     marginTop: 24,

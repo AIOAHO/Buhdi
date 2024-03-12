@@ -55,7 +55,6 @@ export const sendMessage = async (req: Request, res: Response) => {
 
     // Retrieve ThreadID from Mongo
     if (!user.threadId) {
-      console.log(`User with ID ${userId} has assistantId: ${user.assistantId} and threadId: ${user.threadId}`);
       const thread = await openai.beta.threads.create();
       user.threadId = thread.id;
       await user.save();

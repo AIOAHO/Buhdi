@@ -44,6 +44,7 @@ const EnneagramQuizStyle = StyleSheet.create({
   },
   motivationalTextPlaceholder: {
     height: 40,
+    margin: 40,
   },
 });
 

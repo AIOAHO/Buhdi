@@ -112,7 +112,7 @@ export default function LoginScreen({ navigation }) {
     const GoogleSignInButton = ({ onPress, disabled }) => {
       return (
         <Button
-          icon={() => <Image source={googleLogo} style={styles.logo} />}
+          icon={() => <Image source={googleLogo} style={styles.googlelogo} />}
           mode="outlined"
           onPress={onPress}
           disabled={disabled}
@@ -151,7 +151,7 @@ export default function LoginScreen({ navigation }) {
  
           style={styles.input}
         />
-        <HelperText style={{ color: '#E85F5C', height: 25}}type="error">{error}</HelperText>
+        <HelperText style={{ color: '#2E536F', height: 25}}type="error">{error}</HelperText>
         
         <Button onPress={handleLogin} style={styles.button} textColor='#F7E8D8'>
           Login
@@ -177,6 +177,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
+    height: '100%', // Ensure the container does not exceed the screen height
+    overflow: 'hidden', 
   },
   circleRight1: {
     width: width * 0.45,
@@ -252,7 +254,7 @@ const styles = StyleSheet.create({
   googleButtonContent: {
     //placeholder
   },
-  logo: {
+  googlelogo: {
     width: 24,
     height: 24,
   },

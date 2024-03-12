@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Dimensions,  StyleSheet } from 'react-native';
+import { View, Dimensions, ScrollView, StyleSheet } from 'react-native';
 import { TextInput, Button, Text, Title, useTheme, HelperText } from 'react-native-paper';
 import {
   useFonts,
@@ -53,73 +53,81 @@ export default function WaitingListScreen ({ navigation }) {
   
 
   return (
+    <ScrollView style={styles.scrollview}>
       <View style={styles.container}>
         <View style={styles.linearTop}/>
         <View style={styles.circleRight1}/>
         <View style={styles.circleRight2}/>
         <View style={styles.circleLeft}/>
-        <View style={styles.formContainer}>
-          <Text style={styles.title}>Budhi</Text>
           
-          
-          <Text style={styles.subtitle}>
-          Buhdi is your personal AI buddy.
-          </Text>
-          <Text style={styles.subtitle}>
-          There for you when you feel stuck, confused or anxious.
-          </Text>
-          <Title style={styles.title2}>Join Our Waiting List</Title>
-          <TextInput
-            label="Email"
-            value={email}
-            onChangeText={handleEmailChange}
-            mode="outlined"
-            keyboardType="email-address"
-            autoCapitalize="none"
-            style={styles.input}
-          />
+            <View style={styles.formContainer}>
+              <Text style={styles.titlelogo}>Budhi</Text>
+              <Text style={styles.subtitle}>
+              Buhdi is your personal AI buddy.
+              </Text>
+              <Text style={styles.subtitle}>
+              There for you when you feel stuck, confused or anxious.
+              </Text>
+              <Title style={styles.title}>Join Our Waiting List</Title>
+              <TextInput
+                label="Email"
+                value={email}
+                onChangeText={handleEmailChange}
+                mode="outlined"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                style={styles.input}
+              />
 
-            {/* Display error message if exists */}
-            <HelperText type="error" visible={!!errorMessage}>
-            {errorMessage}
-            </HelperText>
+                {/* Display error message if exists */}
+                <HelperText type="error" visible={!!errorMessage}>
+                {errorMessage}
+                </HelperText>
 
-            {/* Display success message if exists */}
-            <HelperText type="info" visible={!!successMessage}>
-              {successMessage}
-            </HelperText>
-          
+                {/* Display success message if exists */}
+                <HelperText type="info" visible={!!successMessage}>
+                  {successMessage}
+                </HelperText>
+              
 
-            <Button
-              onPress={handleJoinWaitingList}
-              style={styles.button}
-              textColor='#F7E8D8'
-              disabled={isSubmitting} // Disable the button while submitting
-            >
-              {isSubmitting ? 'Joooining!' : 'Join our Waiting List'}
-            </Button>
+                <Button
+                  onPress={handleJoinWaitingList}
+                  style={styles.button}
+                  textColor='#F7E8D8'
+                  disabled={isSubmitting} // Disable the button while submitting
+                >
+                  {isSubmitting ? 'Joooining!' : 'Join our Waiting List'}
+                </Button>
 
-          <Button
-            mode="outlined"
-            textColor='#F7E8D8'
-            onPress={() => navigation.navigate('Login')} // Navigate to Login screen
-            style={styles.button}
-          >
-            Already have an account? Log in
-          </Button>
-        </View>
+              <Button
+                mode="outlined"
+                textColor='#F7E8D8'
+                onPress={() => navigation.navigate('Login')} // Navigate to Login screen
+                style={styles.button}
+              >
+                Already have an account? Log in
+              </Button>
+            
+          </View>
+        
       </View>
+    </ScrollView>  
   );
 };
 
 const styles = StyleSheet.create({
+  scrollview: {
+    flexGrow: 1,
+    marginBottom: 40,
+  },
   container: {
     flex: 1,
+    flexWrap: 'wrap',
     justifyContent: 'center',
     alignItems: 'center',
-    width: '100%', 
-    height: height,
+    width: '100%',
   },
+
   circleRight1: {
     width: width * 0.45,
     height: height * 0.4,
@@ -131,6 +139,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: -100,
     top: -100,
+    
   },
   circleRight2: {
     width: width * 0.32,
@@ -143,6 +152,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: -100,
     top: -100,
+ 
   },
   circleLeft: {
     width: width * 0.9,
@@ -155,6 +165,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: -50,
     bottom: -50,
+
   },
   linearTop: {
     width: '120%',
@@ -167,14 +178,17 @@ const styles = StyleSheet.create({
   formContainer: {
     width: width * 0.8, // Ensure buttons take the 80% width of the container
     maxWidth: 350, // Limit the maximum width of buttons
+    flex: 1,
+    marginBottom: 40,
   },
-  title: {
+  titlelogo: {
     fontSize: 130,
     fontFamily: 'BigShouldersStencilDisplay_400Regular',
     color: '#F7E8D8',
-    marginBottom: 60, // Adjust this value to move the title up or down
+    marginTop: 20,
+    marginBottom: 40, // Adjust this value to move the title up or down
  },
-  title2: {
+  title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 10,
@@ -192,7 +206,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   button: {
-    marginTop: 10,
+    marginBottom: 10,
     width: width * 0.8, // Ensure buttons take the 80% width of the container
     maxWidth: 350, // Limit the maximum width of buttons
     backgroundColor: '#2E536F',

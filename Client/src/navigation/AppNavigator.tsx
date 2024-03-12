@@ -12,6 +12,7 @@ import ChatScreen from '../components/Screens/ChatScreen';
 import WaitingListScreen from '../components/Screens/WaitingListScreen';
 import OnboardingScreen from '../components/Screens/OnboardingScreen';
 import FeedbackScreen from '../components/Screens/FeedBackScreen';
+import EmailConfirmationScreen from '../components/Screens/EmailConfirmationScreen';
 
 const Stack = createStackNavigator();
 const linking = {
@@ -20,7 +21,8 @@ const linking = {
     screens: {
       WaitingList: '/',
       Login: 'login',
-      Registration: '/registration'
+      Registration: '/registration',
+      EmailConfirmation: 'emailconfirmation'
       // Add other routes here as needed
     },
  },
@@ -45,7 +47,7 @@ export default function AppNavigator() {
 
   return (
     <NavigationContainer linking={linking}>
-      <Stack.Navigator initialRouteName='EnneagramQuiz'>
+      <Stack.Navigator>
         <Stack.Screen name="WaitingList" component={WaitingListScreen} options={screenOptions}/>
         <Stack.Screen name="Login" component={LoginScreen} options={screenOptions}/>
         <Stack.Screen name="Registration" component={RegistrationScreen} options={screenOptions}/>
@@ -55,6 +57,7 @@ export default function AppNavigator() {
         <Stack.Screen name="EnneagramResults" component={EnneagramResults} options={screenOptions}/>
         <Stack.Screen name="Chat" component={ChatScreen} options={screenOptions}/>
         <Stack.Screen name="Feedback" component={FeedbackScreen} options={screenOptions}/>
+        <Stack.Screen name="EmailConfirmation" component={EmailConfirmationScreen} options={screenOptions}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

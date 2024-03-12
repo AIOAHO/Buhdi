@@ -80,7 +80,7 @@ export default function RegistrationScreen({ navigation }) {
  
           style={styles.input}
         />
-        {error ? <HelperText type="error" visible={true}>{error}</HelperText> : null}
+        {error ? <HelperText type="error" style={{color: '#2E536F'}} visible={true}>{error}</HelperText> : null}
         <Button textColor='#F7E8D8' mode="contained" onPress={handleRegistration} style={styles.button}>
           Register
         </Button>
@@ -102,7 +102,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    backgroundColor: '#F1C1BF',
+    height: '100%', // Ensure the container does not exceed the screen height
+    overflow: 'hidden', 
   },
   circleRight1: {
     width: width * 0.45,
