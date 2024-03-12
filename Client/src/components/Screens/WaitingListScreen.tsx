@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     width: width * 0.8, // Ensure buttons take the 80% width of the container
-    maxWidth: 350, // Limit the maximum width of buttons
+    maxWidth: 350, // Limit the maximum width of buttons.
     flex: 1,
     marginBottom: 40,
   },
