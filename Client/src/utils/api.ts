@@ -28,8 +28,6 @@ api.interceptors.request.use(
        token = await AsyncStorage.getItem('jwtToken');
      }
  
-     
- 
      if (token) {
        config.headers.Authorization = `Bearer ${token}`;
        
@@ -41,11 +39,18 @@ api.interceptors.request.use(
  );
 
 // Interceptors for logging
-api.interceptors.request.use((request: AxiosRequestConfig) => {
-  
-  return request;
-}, (error: AxiosError) => {
-  console.error('Request Error:', error);
+api.interceptors.response.use((response: AxiosResponse) => {
+  return response;
+}, async (error: AxiosError) => {
+  if (error.response?.status === 401) { // Unauthorized
+    if (isWeb) {
+      // Redirect to login page in web environments
+      window.location.href = '/login';
+    } else {
+      navigation.navigate('Login');
+      console.log('Unauthorized access, navigate to Login screen');
+    }
+  }
   return Promise.reject(error);
 });
 

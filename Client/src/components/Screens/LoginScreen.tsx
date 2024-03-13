@@ -131,7 +131,7 @@ export default function LoginScreen({ navigation }) {
       <View style={styles.circleRight2}/>
       <View style={styles.circleLeft}/>
       <View style={styles.formContainer}>
-        <Headline style={styles.title}>Log into Budhi</Headline>
+        <Headline style={styles.headline}>Log into Budhi</Headline>
         <TextInput
           label="Email"
           value={email}
@@ -157,11 +157,12 @@ export default function LoginScreen({ navigation }) {
           Login
         </Button>
 
-        <GoogleSignInButton onPress={() => promptAsync()} disabled={!request} />
+        {/* <GoogleSignInButton onPress={() => promptAsync()} disabled={!request} /> */}
+
 
 
         <Text style={styles.registerText}>
-          New to Buhdi?{' '}
+          Already have an invitation?{' '}
           <Text style={styles.registerLink} onPress={() => navigation.navigate('Registration')}>
             Register here
           </Text>
@@ -228,11 +229,10 @@ const styles = StyleSheet.create({
     width: width * 0.8, // Ensure buttons take the 80% width of the container
     maxWidth: 350, // Limit the maximum width of buttons
   },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 10,
+  headline: {
     textAlign: 'center',
+    marginBottom: 20,
+    fontFamily: 'Inter_400Regular',
     color: '#2E536F',
   },
   input: {
@@ -241,10 +241,10 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 10,
+    marginBottom: 10,
+    backgroundColor: '#2E536F',
     width: width * 0.8, // Ensure buttons take the 80% width of the container
     maxWidth: 350, // Limit the maximum width of buttons
-    backgroundColor: '#2E536F',
-    color: '#59656F',
   },
   googleButton: {
     width: width * 0.8, // Ensure buttons take the 80% width of the container

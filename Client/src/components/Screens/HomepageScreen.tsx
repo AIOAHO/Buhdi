@@ -46,7 +46,7 @@ export default function HomepageScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Welcome to</Text>
-      <Text style={styles.title}>Budhi</Text>
+      <Text style={styles.titlelogo}>Budhi</Text>
       <View style={styles.linearTop}/>
       <View style={styles.circleRight1}/>
       <View style={styles.circleRight2}/>
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter_400Regular',
     color: '#2E536F',
   },
-  title: {
+  titlelogo: {
     fontSize: 130,
     fontFamily: 'BigShouldersStencilDisplay_400Regular',
     color: '#2E536F',

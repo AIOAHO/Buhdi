@@ -1,6 +1,6 @@
 # Budhi
 
-Your awesome little budhi!
+Your awesome little Budhi!
 
 ## Description
 

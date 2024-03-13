@@ -19,13 +19,16 @@ export default function EmailConfirmationScreen({ navigation }) {
   });
   
   return (
+    <ScrollView style={{flex: 1}} contentContainerStyle={styles.contentscroll}>  
     <View style={styles.container}>
-        <View style={styles.linearTop} />
-        <View style={styles.circleRight1} />
-        <View style={styles.circleRight2} />
-        <View style={styles.circleLeft} />
+        <View style={styles.circleContainer}>
+            <View style={styles.linearTop} />
+            <View style={styles.circleRight1} />
+            <View style={styles.circleRight2} />
+            <View style={styles.circleLeft} />
+        </View>
         <Text style={styles.title}>Hey there!</Text>
-        <ScrollView style={styles.scrollview}>
+
             <View style={styles.contentcontainer}>
                 <View style={{ marginTop: 20 }}>
                     <Text style={styles.text}>Thanks for signing up to our waitinglist!</Text>
@@ -37,9 +40,9 @@ export default function EmailConfirmationScreen({ navigation }) {
                     <Text style={styles.text}>This baby octopus will keep you company until then!</Text>
                 </View>
             </View>
-        </ScrollView>
+       
     </View>    
-        
+    </ScrollView>      
   );
 }
 
@@ -48,18 +51,26 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: '#F1C1BF',
         flex: 1,
-        flexWrap: 'wrap',
-        overflow: 'hidden',
-// Add padding at the bottom for scrolling   
     },
-    scrollview: {
+    circleContainer: {
+        flexGrow: 1,
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        justifyContent: 'center',
+        alignItems: 'center',
+        overflow: 'hidden',
+      },
+    contentscroll: {
         flexGrow: 1,
         paddingBottom: 40,
+        height: height * .75
     },
     contentcontainer: {
         flexDirection: 'column',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         alignItems: 'center',
         width: '100%',  
         paddingBottom: 30, 
@@ -119,7 +130,7 @@ const styles = StyleSheet.create({
         borderColor: '#fff0db',
         position: 'absolute',
         left: -50,
-        bottom: -50,
+        bottom: 0,
     },
     linearTop: {
         width: '120%',

@@ -21,7 +21,7 @@ const linking = {
     screens: {
       WaitingList: '/',
       Login: 'login',
-      Registration: '/registration',
+      Registration: 'registration',
       EmailConfirmation: 'emailconfirmation'
       // Add other routes here as needed
     },
@@ -31,6 +31,7 @@ const linking = {
 export default function AppNavigator() {
 
   const screenOptions: any = {
+  
     headerShown: true,
     headerShadowVisible: false,
     headerTitleAlign: 'center',

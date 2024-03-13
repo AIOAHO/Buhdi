@@ -6,6 +6,7 @@ const EnneagramQuizStyle = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
+    overflow: 'hidden',
   },
   linearTop: {
     width: '120%',
@@ -18,8 +19,6 @@ const EnneagramQuizStyle = StyleSheet.create({
   formContainer: {
     width: '90%',
     maxWidth: 400,
-    marginTop: 20,
-    marginBottom: 20,
   },
   questionIndicator: {
     fontSize: 16,
@@ -31,20 +30,20 @@ const EnneagramQuizStyle = StyleSheet.create({
   navigationContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 20,
-    marginBottom: 10,
+    marginTop: 10,
+    marginBottom: 20,
     width: '100%',
   },
   motivationalText: {
     fontSize: 18,
     textAlign: 'center',
     margin: 20,
-    marginBottom: 30,
     color: '#2E536F',
   },
   motivationalTextPlaceholder: {
     height: 40,
-    margin: 40,
+    marginBottom: 40,
+    marginTop: 20,
   },
 });
 

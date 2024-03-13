@@ -120,7 +120,6 @@ export default function EnneagramQuiz() {
               question={shuffledQuestions[currentQuestionIndex]}
               onAnswer={handleAnswer}
               selectedScore={answers[currentQuestionIndex]}
-
             />
             <Text style={styles.questionIndicator}>
               {currentQuestionIndex + 1}/{shuffledQuestions.length}

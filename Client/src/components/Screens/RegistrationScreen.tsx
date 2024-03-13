@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, Dimensions } from 'react-native';
-import { TextInput, Button, Headline, HelperText } from 'react-native-paper';
+import { View, StyleSheet, Dimensions } from 'react-native';
+import { TextInput, Button, Text, Headline, HelperText } from 'react-native-paper';
 import { register, login, validateEmail, validatePassword } from '../../utils/auth'; // Make sure these are exported
 import { useFonts, Inter_400Regular } from '@expo-google-fonts/inter';
 
